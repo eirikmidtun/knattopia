@@ -416,12 +416,12 @@ export function tick(s: Spilltilstand, dt: number, tilfeldig: () => number = Mat
       dose: 0,
       razziaer: ny.razziaer + 1,
     };
-    ny = leggTilNyhet(ny, "🚨 RAZZIA! Mattilsynet stormer hovedkontoret. Big Knatt Corp «samarbeider fullt ut». Dosen er satt til null … inntil videre.");
+    ny = leggTilNyhet(ny, "RAZZIA! Mattilsynet stormer hovedkontoret. Big Knatt Corp «samarbeider fullt ut». Dosen er satt til null … inntil videre.");
   }
 
   // Milepæl
   if (!ny.helenorgesover && produktivitet(ny) < 10) {
-    ny = leggTilNyhet({ ...ny, helenorgesover: true }, "💤 HELE NORGE SOVER. Produktiviteten er under 10 %. Styret i Big Knatt Corp skåler i knattesaft.");
+    ny = leggTilNyhet({ ...ny, helenorgesover: true }, "HELE NORGE SOVER. Produktiviteten er under 10 %. Styret i Big Knatt Corp skåler i knattesaft.");
   }
 
   return ny;

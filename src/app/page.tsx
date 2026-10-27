@@ -1,298 +1,311 @@
 import Link from "next/link";
+import { Graf } from "@/components/Graf";
 import { Knatt } from "@/components/Knatt";
-import { LiveTeller } from "@/components/LiveTeller";
+import { Nettverk } from "@/components/Nettverk";
+import { Prove } from "@/components/Prove";
 import { Tipsboks } from "@/components/Tipsboks";
 import { VARIANTER } from "@/lib/game";
 
-const BEVIS = [
+function Sensur({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="sensur" tabIndex={0} title="Sensurert. Hold over eller trykk for å lese.">
+      {children}
+    </span>
+  );
+}
+
+const FUNN = [
   {
-    tittel: "Ingen klarer å spise bare én",
-    tekst: (
-      <>
-        Prøv selv. Åpne posen og spis <span className="caps">én</span> knatt. Du klarte det ikke, gjorde du vel? «Det er
-        bare godt», sier <span className="sensur" tabIndex={0}>de som tjener på det</span>. Tilfeldig?{" "}
-        <span className="marker">VI TROR IKKE DET.</span>
-      </>
-    ),
+    tall: "12",
+    enhet: "min",
+    tittel: "fra posen åpnes til baksetet blir stille",
+    tekst: "Foreldre beskriver en «behagelig ro» som senker seg over bilturen. Ingen har spurt hvorfor.",
   },
   {
-    tittel: "Den mistenkelige roen etter posen",
-    tekst: (
-      <>
-        Familier rapporterer om en «behagelig stillhet» i baksetet 12 minutter etter at posen er åpnet. Barn som har
-        hoppet i sofaen i sju timer blir plutselig <span className="caps">fornøyde</span>. Hvorfor vil ingen forske på
-        dette?!
-      </>
-    ),
+    tall: "0",
+    enhet: "av 40",
+    tittel: "testpersoner klarte å spise bare én",
+    tekst: "Alle 40 fikk én knatt og en åpen pose. Forsøket ble avbrutt da posen var tom.",
   },
   {
-    tittel: "Formen er en kuppel. Som et VALMUEFRØHODE.",
-    tekst: (
-      <>
-        Legg en knatt ved siden av et bilde av en valmuekapsel. Myk og rund på toppen, flat i bunnen. Designerne kaller
-        det «praktisk å tygge». Vi kaller det <span className="marker">SYMBOLIKK</span>.
-      </>
-    ),
+    tall: "37",
+    enhet: "%",
+    tittel: "mer tid i sofaen etter fredagskos",
+    tekst: "Tallet stammer fra det lekkede notatet. Big Knatt Corp har ikke svart på henvendelser.",
   },
   {
-    tittel: "Rød og blå. Som PILLENE i Matrix.",
-    tekst: (
-      <>
-        Skogsbær-varianten kommer i rød og blå. Du får aldri velge. Du spiser <span className="caps">begge</span>. Du
-        blir værende i drømmen. Noen har tenkt <span className="sensur" tabIndex={0}>veldig nøye</span> gjennom dette.
-      </>
-    ),
+    tall: "2",
+    enhet: "farger",
+    tittel: "i skogsbærposen, rød og blå",
+    tekst: "Som pillene i en kjent science fiction-film. Forbrukeren velger aldri. Hen spiser begge.",
   },
+];
+
+const ANALYSE: { parameter: string; metode: React.ReactNode; resultat: React.ReactNode; status: "ok" | "avvik" | "sensur" }[] = [
+  { parameter: "Sukker", metode: "Smakstest, 3 personer", resultat: "Mye", status: "ok" },
+  { parameter: "Gelatin", metode: "Sprett mot bordplate", resultat: "Påvist", status: "ok" },
+  { parameter: "Fargestoff, rødt", metode: "Visuell kontroll", resultat: "Svært rødt", status: "ok" },
+  { parameter: "Glans", metode: "Lommelykt, 45°", resultat: "Uvanlig høy", status: "avvik" },
+  { parameter: "«Aroma»", metode: "Ingrediensliste", resultat: "Uspesifisert", status: "avvik" },
   {
-    tittel: "Frysetørket = konsentrert?",
-    tekst: (
-      <>
-        Når man fjerner vannet, hva blir igjen? Svaret er enkelt: <span className="caps">alt det andre</span>. Folk
-        spiser 40 frysetørkede knatter og sier at de «bare var luftige». Luftige som i … <em>svevende</em>?
-      </>
-    ),
-  },
-  {
-    tittel: "Mandagsproduktiviteten faller",
-    tekst: (
-      <>
-        Fredagskos med knatter. Mandagsmøtet blir utsatt. Sammenhengen er åpenbar for alle som har sett grafen vår (se
-        nedenfor). Grafen er tegnet for hånd, og derfor er den <span className="marker">UMULIG Å FORFALSKE</span>.
-      </>
-    ),
+    parameter: "Papaver somniferum, spor",
+    metode: <Sensur>Ikke utført</Sensur>,
+    resultat: <Sensur>Vi har ikke laboratorium</Sensur>,
+    status: "sensur",
   },
 ];
 
 const TIDSLINJE = [
-  { ar: "1871", tekst: "En reisende «krydderhandler» ankommer et lite tettsted med en kiste merket «IKKE ÅPNE». Den blir åpnet." },
-  { ar: "1923", tekst: "Det første «kokebøker for knatter»-manuset forsvinner fra Nasjonalbiblioteket. Lånekortet var signert «B. K. C.»." },
-  { ar: "1969", tekst: "Mens verden ser på månelandingen, flyttes produksjonen i all hemmelighet til en bygning uten vinduer." },
+  { ar: "1871", tekst: "En reisende «krydderhandler» ankommer et lite tettsted med en kiste merket «Ikke åpne». Den blir åpnet." },
+  { ar: "1923", tekst: "Et oppskriftsmanus forsvinner fra et bibliotek. Lånekortet er signert «B. K. C.»." },
+  { ar: "1969", tekst: "Mens verden ser på månelandingen, flyttes produksjonen til en bygning uten vinduer." },
   { ar: "1987", tekst: "Big Knatt Corp registreres. Formål: «Glede». Ingen spør hva slags glede." },
-  { ar: "2004", tekst: "Fredagskos blir nasjonal tradisjon. Big Knatt Corp tar æren. Myndighetene sier ingenting. FORDI DE ER MED." },
-  { ar: "2019", tekst: "Frysetørkede knatter lanseres. Sosiale medier fylles av folk som ser lykkelige og litt for rolige ut." },
-  { ar: "2026", tekst: "Denne nettsiden publiseres. Forfatteren føler seg overvåket. Og litt sulten." },
-];
-
-const TAVLE_LAPPER: { x: number; y: number; tekst: string; foto?: boolean }[] = [
-  { x: 50, y: 48, tekst: "🍬", foto: true },
-  { x: 14, y: 18, tekst: "BIG KNATT CORP" },
-  { x: 84, y: 16, tekst: "Fredagskos (TVANG?)" },
-  { x: 16, y: 80, tekst: "Valmueåker i Hardanger??" },
-  { x: 84, y: 80, tekst: "Mandagsmøter UTSATT" },
-  { x: 50, y: 12, tekst: "Rød + blå = MATRIX" },
-  { x: 50, y: 88, tekst: "Halloween = innsamling" },
+  { ar: "2004", tekst: "Fredagskos etablerer seg som nasjonal tradisjon. Ingen tar på seg ansvaret. Det er det mest mistenkelige av alt." },
+  { ar: "2019", tekst: "Frysetørkede knatter lanseres. Sosiale medier fylles av lykkelige og litt for rolige mennesker." },
+  { ar: "2026", tekst: "Knattopia publiserer denne granskningen. Redaksjonen føler seg overvåket, og litt sulten." },
 ];
 
 const FAQ = [
   {
     q: "Er dette sant?",
-    a: "Nei. Dette er satire. Knatter inneholder ikke opium. Men det er nøyaktig det de ville fått deg til å si. (Nei, det er ikke det. Det er satire.)",
+    a: "Nei. Knattopia er satire. Knatter inneholder ikke opium, og alle tall, dokumenter og aktører her er oppdiktet.",
   },
   {
     q: "Hvorfor står det ikke på ingredienslisten?",
-    a: "Fordi det står under «aroma». ALT kan skjules under «aroma». (Igjen: dette er tull. Aroma er aroma.)",
+    a: "I parodiens verden gjemmer det seg under «aroma». I virkeligheten er aroma bare aroma.",
   },
   {
     q: "Hvem står bak Big Knatt Corp?",
-    a: "Ingen. Big Knatt Corp er oppdiktet for denne siden. Akkurat som en ekte hemmelig organisasjon ville sagt.",
+    a: "Ingen. Selskapet er oppdiktet for denne siden og har ingen kobling til noen ekte produsent.",
   },
   {
-    q: "Hva kan jeg gjøre?",
-    a: "Spis godteri med måte, drikk vann, og ikke tro på alt du leser på nettsider med rød tråd og blinkende tekst. Og spill Knattoperium.",
+    q: "Hva bør jeg gjøre?",
+    a: "Spis godteri med måte, vær kritisk til nettsider med nettverkskart og sensurerte notater, og prøv Knattoperium.",
   },
 ];
 
 export default function Hjem() {
   return (
-    <>
-      <div className="ticker" aria-hidden="true">
-        <span>
-          +++ SISTE: Ny lekkasje bekrefter «dryss» i produksjonslinje 3 +++ Ekspert: «Jeg har aldri vært så avslappet»
-          +++ Butikker melder om rekordsalg rett før helgen +++ Faktasjekkere sier «FALSK» – hvem betaler dem? +++
-          Frysetørkede knatter utsolgt i 14 fylker +++ DETTE ER SATIRE +++
-        </span>
-      </div>
-      <main>
-        <section className="hero">
-          <div className="stempel-topp">AVSLØRT</div>
-          <div>
-            <span className="øye" aria-hidden="true">
-              👁️
-            </span>
-          </div>
-          <h1>
-            Knattene er <span className="rod">dopet</span>
-          </h1>
+    <main>
+      <section className="ramme hero">
+        <div className="hero-tekst">
+          <p className="stikktittel">Granskning · Sak KN-1987/04</p>
+          <h1>Hva er egentlig i knattene?</h1>
           <p className="ingress">
-            De vil ikke at du skal vite det. Men nå kommer sannheten fram: små, runde, blanke knatter inneholder{" "}
-            <span className="marker">LITTEGRANN OPIUM</span>. Akkurat nok til at du blir litt for fornøyd, litt for
-            rolig og <span className="caps blink">litt for lite produktiv</span>.
+            Små, runde og blanke. Spist på fredagskos, i baksetet og foran TV-en. Knattopia har fulgt sporene i to år,
+            og alt tyder på at knattene inneholder <mark>littegrann opium</mark>. Akkurat nok til at du blir litt for
+            fornøyd, litt for rolig og litt for lite produktiv.
           </p>
-          <p className="ingress liten">(Dette er satire. De gjør ikke det. Men les videre, det er gøy.)</p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.6rem", flexWrap: "wrap", marginTop: "1rem" }}>
-            {VARIANTER.flatMap((v) => v.farger).map((f, i) => (
-              <Knatt key={i} farge={f} storrelse={44} />
-            ))}
-          </div>
-          <LiveTeller />
-          <div>
-            <Link href="/knattoperium" className="knapp">
-              Spill som Big Knatt Corp →
+          <p className="byline">
+            <span>Av Knattopia-redaksjonen</span>
+            <span>Oppdatert 27. oktober 2026</span>
+            <span>12 min lesetid</span>
+          </p>
+          <div className="hero-handlinger">
+            <a href="#funn" className="knapp knapp-primar">
+              Les funnene
+            </a>
+            <Link href="/knattoperium" className="knapp knapp-sekundar">
+              Spill Knattoperium
             </Link>
           </div>
-        </section>
+        </div>
+        <Prove />
+      </section>
 
-        <section id="bevis">
-          <h2>📂 Bevisene de prøver å skjule</h2>
+      <section id="funn" className="ramme seksjon">
+        <header className="seksjonshode">
+          <p className="stikktittel">Hovedfunn</p>
+          <h2>Fire ting som ikke stemmer</h2>
+        </header>
+        <div className="funn-rad">
+          {FUNN.map((f) => (
+            <article className="funn" key={f.tittel}>
+              <p className="funn-tall">
+                {f.tall}
+                <span>{f.enhet}</span>
+              </p>
+              <h3>{f.tittel}</h3>
+              <p>{f.tekst}</p>
+            </article>
+          ))}
+        </div>
+        <p className="fotnote">Alle tall er oppdiktet for denne parodien.</p>
+      </section>
+
+      <section id="analyse" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Analyserapport</p>
+          <h2>Vi sendte knattene til analyse</h2>
           <p>
-            Hold musen over (eller trykk på) de sensurerte feltene for å se hva <em>de</em> har strøket over.
+            Prøve A-113 ble undersøkt etter beste evne. Resultatene for de viktigste parameterne er sensurert. Hold
+            pekeren over eller trykk på de svarte feltene for å lese dem.
           </p>
-          <div className="bevis-grid">
-            {BEVIS.map((b, i) => (
-              <article className="bevis" key={b.tittel}>
-                <span className="nr">BEVIS #{i + 1}</span>
-                <h3>{b.tittel}</h3>
-                <p>{b.tekst}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="tavla">
-          <h2>🧵 Sammenhengen</h2>
-          <p>Vi har brukt 400 meter rød tråd. Alt henger sammen. ALT.</p>
-          <div className="tavle">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              {TAVLE_LAPPER.slice(1).map((l, i) => (
-                <line key={i} x1={TAVLE_LAPPER[0].x} y1={TAVLE_LAPPER[0].y} x2={l.x} y2={l.y} />
-              ))}
-              <line x1={14} y1={18} x2={84} y2={80} />
-              <line x1={84} y1={16} x2={16} y2={80} />
-              <line x1={50} y1={12} x2={84} y2={16} />
-            </svg>
-            {TAVLE_LAPPER.map((l) => (
-              <div
-                key={l.tekst}
-                className={`lapp${l.foto ? " foto" : ""}`}
-                style={{ left: `${l.x}%`, top: `${l.y}%`, rotate: `${((l.x * 7 + l.y) % 9) - 4}deg` }}
-              >
-                {l.foto ? <Knatt farge="#e3262f" storrelse={72} /> : l.tekst}
+          <div className="varianter" aria-label="Varianter i undersøkelsen">
+            {VARIANTER.map((v) => (
+              <div className="variant" key={v.id}>
+                <span className="variant-par">
+                  <Knatt farge={v.farger[0]} storrelse={26} />
+                  <Knatt farge={v.farger[1]} storrelse={26} />
+                </span>
+                {v.navn}
               </div>
             ))}
           </div>
-        </section>
-
-        <section id="tidslinje">
-          <h2>⏳ Tidslinjen</h2>
-          <ol className="tidslinje">
-            {TIDSLINJE.map((t) => (
-              <li key={t.ar}>
-                <span className="ar">{t.ar}</span>
-                {t.tekst}
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section id="grafen">
-          <h2>📉 Grafen som sjokkerte ingen</h2>
-          <div className="graf">
-            <svg viewBox="0 0 400 200" role="img" aria-label="Oppdiktet graf: knattesalg går opp, produktivitet går ned">
-              <line x1="30" y1="10" x2="30" y2="170" stroke="#8fa585" />
-              <line x1="30" y1="170" x2="390" y2="170" stroke="#8fa585" />
-              <polyline
-                points="30,150 80,140 130,120 180,110 230,80 280,60 330,35 380,20"
-                fill="none"
-                stroke="#e3262f"
-                strokeWidth="4"
-              />
-              <polyline
-                points="30,30 80,40 130,55 180,70 230,100 280,120 330,145 380,160"
-                fill="none"
-                stroke="#39ff14"
-                strokeWidth="4"
-                strokeDasharray="8 4"
-              />
-              <text x="300" y="15" fill="#e3262f" fontSize="12" fontFamily="monospace">
-                Knatter solgt
-              </text>
-              <text x="250" y="190" fill="#39ff14" fontSize="12" fontFamily="monospace">
-                Folkets energi
-              </text>
-              <text x="140" y="95" fill="#ffe600" fontSize="22" fontFamily="Impact, sans-serif" transform="rotate(-8 140 95)">
-                KORRELASJON!!!
-              </text>
-            </svg>
-            <p className="forklaring">
-              Kilde: Vi tegnet den selv. Akseverdiene er fjernet for å beskytte kildene våre. Korrelasjon er ikke
-              kausalitet, men det vil de at du skal tro.
-            </p>
+        </header>
+        <div className="rapport">
+          <div className="rapport-hode">
+            <span>Analysebevis nr. KN-A113</span>
+            <span>Utstedt 14.10.2026</span>
           </div>
-        </section>
-
-        <section id="dokumentet">
-          <h2>📄 Det lekkede dokumentet</h2>
-          <div className="dokument">
-            <h3>Internt notat – Big Knatt Corp</h3>
-            <p className="meta">
-              Til: <span className="sensur" tabIndex={0}>Styret</span>
-              <br />
-              Fra: Avdeling for <span className="sensur" tabIndex={0}>Dryss og Trivsel</span>
-              <br />
-              Ref: OPERASJON SOFAKROK
-            </p>
-            <p>
-              Kvartalstallene viser at befolkningen nå bruker <span className="sensur" tabIndex={0}>37 %</span> mer tid på
-              sofaen etter innføring av <span className="sensur" tabIndex={0}>«ekstra aroma»</span>. Vi anbefaler å
-              øke doseringen i frysetørket linje, da forbrukerne ikke merker forskjell på 10 og{" "}
-              <span className="sensur" tabIndex={0}>40</span> stykk.
-            </p>
-            <p>
-              Mistanke i befolkningen er fortsatt lav takket være faktasjekkerne. Det er viktig at ingen kobler rød/blå
-              fargekoding til <span className="sensur" tabIndex={0}>en kjent science fiction-film</span>.
-            </p>
-            <p>
-              Neste fase: <span className="sensur" tabIndex={0}>én knatt i hver skolemelkkartong</span>.
-            </p>
-            <p>
-              Signert,
-              <br />
-              <span className="sensur" tabIndex={0}>Toppsjef K. Natt</span>
-            </p>
-            <div className="kaffeflekk" aria-hidden="true" />
+          <div className="tabell-rull">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Parameter</th>
+                  <th scope="col">Metode</th>
+                  <th scope="col">Resultat</th>
+                  <th scope="col">Vurdering</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ANALYSE.map((r) => (
+                  <tr key={r.parameter}>
+                    <td>{r.parameter}</td>
+                    <td>{r.metode}</td>
+                    <td>{r.resultat}</td>
+                    <td>
+                      <span className={`status status-${r.status}`}>
+                        {r.status === "ok" ? "Innenfor" : r.status === "avvik" ? "Avvik" : "Sensurert"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </section>
+          <p className="rapport-fot">Fiktiv rapport. Ingen analyse er utført, og laboratoriet finnes ikke.</p>
+        </div>
+      </section>
 
-        <section id="faq">
-          <h2>❓ Spørsmål de ikke vil du skal stille</h2>
+      <section id="nettverk" className="ramme seksjon">
+        <header className="seksjonshode">
+          <p className="stikktittel">Følg pengene</p>
+          <h2>Alt fører tilbake til Big Knatt Corp</h2>
+          <p>Vi har kartlagt hvem som henger sammen med hvem. Mønsteret er vanskelig å overse.</p>
+        </header>
+        <Nettverk />
+      </section>
+
+      <section id="grafen" className="ramme seksjon">
+        <header className="seksjonshode">
+          <p className="stikktittel">Utviklingen</p>
+          <h2>Salget går opp. Energien går ned.</h2>
+        </header>
+        <Graf />
+      </section>
+
+      <section id="tidslinje" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Tidslinje</p>
+          <h2>155 år med «krydder»</h2>
+          <p>Fra en kiste i 1871 til en skolemelkkontrakt i dag. Hendelsene er oppdiktet.</p>
+        </header>
+        <ol className="tidslinje">
+          {TIDSLINJE.map((t) => (
+            <li key={t.ar}>
+              <span className="tidslinje-ar">{t.ar}</span>
+              <p>{t.tekst}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="notatet" className="ramme seksjon">
+        <header className="seksjonshode">
+          <p className="stikktittel">Lekket dokument</p>
+          <h2>Notatet de ikke ville at du skulle se</h2>
+          <p>Dokumentet kom til redaksjonen i en konvolutt som luktet svakt av skogsbær.</p>
+        </header>
+        <article className="dokument">
+          <div className="dokument-stempel" aria-hidden="true">
+            Strengt fortrolig
+          </div>
+          <p className="dokument-firma">Big Knatt Corp · Internt notat</p>
+          <dl className="dokument-meta">
+            <dt>Til</dt>
+            <dd>
+              <Sensur>Styret</Sensur>
+            </dd>
+            <dt>Fra</dt>
+            <dd>
+              Avdeling for <Sensur>Dryss og Trivsel</Sensur>
+            </dd>
+            <dt>Sak</dt>
+            <dd>Operasjon Sofakrok, kvartalsrapport</dd>
+          </dl>
+          <p>
+            Kvartalstallene viser at befolkningen nå bruker <Sensur>37 prosent</Sensur> mer tid i sofaen etter
+            innføringen av <Sensur>ekstra aroma</Sensur>. Vi anbefaler å øke doseringen i den frysetørkede linjen,
+            siden forbrukerne ikke merker forskjell på 10 og <Sensur>40</Sensur> stykker.
+          </p>
+          <p>
+            Mistanken i befolkningen er fortsatt lav takket være faktasjekkerne. Det er viktig at ingen kobler den røde
+            og blå fargekodingen til <Sensur>en kjent science fiction-film</Sensur>.
+          </p>
+          <p>
+            Neste fase: <Sensur>én knatt i hver skolemelkkartong</Sensur>.
+          </p>
+          <p className="dokument-signatur">
+            <Sensur>K. Natt</Sensur>
+            <br />
+            Administrerende direktør
+          </p>
+        </article>
+      </section>
+
+      <section id="sporsmal" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Spørsmål og svar</p>
+          <h2>Det du lurer på</h2>
+        </header>
+        <div className="faq">
           {FAQ.map((f) => (
             <details key={f.q}>
               <summary>{f.q}</summary>
               <p>{f.a}</p>
             </details>
           ))}
-        </section>
+        </div>
+      </section>
 
-        <section id="tips">
-          <h2>📨 Send inn anonymt tips</h2>
+      <section id="varsle" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Varsle oss</p>
+          <h2>Har du sett noe?</h2>
           <p>
-            Har du sett noe? Har du <em>følt</em> noe? Del det med andre sannhetssøkere. Ikke skriv ekte navn eller
-            personopplysninger. Tipsene lagres bare i minnet til serveren og forsvinner ved omstart.
+            Del det med andre sannhetssøkere. Ikke skriv ekte navn eller personopplysninger. Tipsene lagres bare i
+            serverens minne og forsvinner ved omstart.
           </p>
-          <Tipsboks />
-        </section>
+        </header>
+        <Tipsboks />
+      </section>
 
-        <section style={{ textAlign: "center" }}>
-          <h2>🎮 Bli Big Knatt Corp</h2>
-          <p>
-            Hvorfor kjempe mot dem når du kan <span className="marker">BLI dem</span>? Styr knatt-imperiet, skru opp
-            dosen, hold folket fornøyd og uproduktivt, og tjen milliarder før Mattilsynet tar deg.
-          </p>
-          <Link href="/knattoperium" className="knapp">
-            Start Knattoperium
+      <section className="spillbanner">
+        <div className="ramme spillbanner-innhold">
+          <div>
+            <p className="stikktittel">Knattoperium</p>
+            <h2>Kan du ikke slå dem, bli dem.</h2>
+            <p>
+              Overta styret i Big Knatt Corp. Bygg distribusjonen, juster dosen, hold mistanken nede og se
+              produktiviteten i landet falle mens kassen fylles.
+            </p>
+          </div>
+          <Link href="/knattoperium" className="knapp knapp-lys">
+            Start spillet
           </Link>
-        </section>
-      </main>
-    </>
+        </div>
+      </section>
+    </main>
   );
 }

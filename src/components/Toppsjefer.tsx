@@ -40,6 +40,8 @@ export function Toppsjefer({ totaltTjent, razziaer }: { totaltTjent: number; raz
     <div>
       <form onSubmit={send} className="toppsjef-form">
         <input
+          id="toppsjef-navn"
+          aria-label="Toppsjef-alias"
           className="navn-input"
           value={navn}
           onChange={(e) => setNavn(e.target.value)}
@@ -47,7 +49,7 @@ export function Toppsjefer({ totaltTjent, razziaer }: { totaltTjent: number; raz
           placeholder="Ditt toppsjef-alias"
           required
         />
-        <button className="knapp liten-knapp" type="submit" disabled={totaltTjent <= 0}>
+        <button className="knapp knapp-primar" type="submit" disabled={totaltTjent <= 0}>
           Send inn {formaterKroner(totaltTjent)}
         </button>
       </form>

@@ -14,7 +14,7 @@ export function Tipsboks() {
     fetch("/api/tips")
       .then((r) => r.json())
       .then((d: { tips: Tips[] }) => setTips(d.tips))
-      .catch(() => setFeil("Klarte ikke hente tips. DE har kuttet linjen."));
+      .catch(() => setFeil("Klarte ikke å hente tipsene. Last inn siden på nytt."));
   }, []);
 
   async function send(e: FormEvent) {
@@ -42,15 +42,16 @@ export function Tipsboks() {
   }
 
   return (
-    <div>
+    <div className="tipsboks">
       <form className="tips-form" onSubmit={send}>
-        <label>
-          Kodenavn (valgfritt)
-          <input value={kodenavn} onChange={(e) => setKodenavn(e.target.value)} maxLength={40} placeholder="Agent Lakris" />
+        <label className="felt">
+          <span>Kodenavn (valgfritt)</span>
+          <input id="tips-kodenavn" value={kodenavn} onChange={(e) => setKodenavn(e.target.value)} maxLength={40} placeholder="Agent Lakris" />
         </label>
-        <label>
-          Hva har du sett?
+        <label className="felt">
+          <span>Hva har du sett?</span>
           <textarea
+            id="tips-tekst"
             value={tekst}
             onChange={(e) => setTekst(e.target.value)}
             maxLength={280}
@@ -60,17 +61,17 @@ export function Tipsboks() {
           />
         </label>
         {feil && <p className="feil">{feil}</p>}
-        <button className="knapp" type="submit" disabled={sender}>
-          {sender ? "Krypterer…" : "Send til motstandsbevegelsen"}
+        <button className="knapp knapp-primar" type="submit" disabled={sender}>
+          {sender ? "Sender…" : "Send tips"}
         </button>
       </form>
       <ul className="tips-liste">
         {tips.map((t) => (
           <li key={t.id}>
-            <div className="hvem">
-              🕵️ {t.kodenavn} · {new Date(t.tid).toLocaleDateString("nb-NO")}
-            </div>
-            <div>{t.tekst}</div>
+            <p className="tips-tekst">{t.tekst}</p>
+            <p className="hvem">
+              {t.kodenavn} · {new Date(t.tid).toLocaleDateString("nb-NO")}
+            </p>
           </li>
         ))}
       </ul>

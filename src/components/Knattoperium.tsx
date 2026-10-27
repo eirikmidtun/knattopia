@@ -32,14 +32,19 @@ import { Knatt } from "./Knatt";
 import { Toppsjefer } from "./Toppsjefer";
 
 const LAGRINGSNOKKEL = "knattoperium-v1";
-const DOSENAVN = ["Helt rene (kjedelig)", "Et lite dryss", "Et godt dryss", "Bøttevis (uforsvarlig)"];
+const HISTORIKK = 60;
+const DOSER = [
+  { navn: "Ingen", tekst: "Rene knatter. Trygt og kjedelig." },
+  { navn: "Lav", tekst: "Et lite dryss. Folk blir litt rolige." },
+  { navn: "Middels", tekst: "Et godt dryss. Kundene kommer tilbake." },
+  { navn: "Høy", tekst: "Bøttevis. Mistanken stiger raskt." },
+];
 
 interface Popp {
   id: number;
   x: number;
   y: number;
   tekst: string;
-  farge: string;
 }
 
 function lesLagring(): Spilltilstand | null {
@@ -55,32 +60,69 @@ function skrivLagring(s: Spilltilstand) {
   try {
     localStorage.setItem(LAGRINGSNOKKEL, JSON.stringify(s));
   } catch {
-    // Privat modus eller full lagring: spillet fungerer fortsatt, det lagres bare ikke.
+    // Privat modus eller full lagring: spillet fungerer, det lagres bare ikke.
   }
 }
 
-function Maler({ navn, verdi, farge, tekst }: { navn: string; verdi: number; farge: string; tekst: string }) {
+function Maler({
+  navn,
+  verdi,
+  tone,
+  tekst,
+  hjelp,
+}: {
+  navn: string;
+  verdi: number;
+  tone: "noytral" | "god" | "advarsel" | "kritisk";
+  tekst: string;
+  hjelp: string;
+}) {
   return (
     <div className="maler">
       <div className="maler-topp">
-        <span>{navn}</span>
-        <span>{tekst}</span>
+        <span className="maler-navn">{navn}</span>
+        <span className="maler-verdi">{tekst}</span>
       </div>
-      <div className="maler-bar">
-        <div style={{ width: `${Math.max(0, Math.min(100, verdi))}%`, background: farge }} />
+      <div className="maler-bar" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(verdi)} aria-label={navn}>
+        <div className={`maler-fyll tone-${tone}`} style={{ width: `${Math.max(0, Math.min(100, verdi))}%` }} />
       </div>
+      <p className="maler-hjelp">{hjelp}</p>
     </div>
   );
+}
+
+function Sparkline({ verdier }: { verdier: number[] }) {
+  if (verdier.length < 3) return <svg className="sparkline" viewBox="0 0 120 32" aria-hidden="true" />;
+  const maks = Math.max(...verdier, 0.0001);
+  const pkt = verdier.map((v, i) => [(i / (HISTORIKK - 1)) * 120, 30 - (v / maks) * 26] as const);
+  const forskyv = 120 - pkt[pkt.length - 1][0];
+  const linje = pkt.map(([x, y], i) => `${i ? "L" : "M"}${(x + forskyv).toFixed(1)} ${y.toFixed(1)}`).join(" ");
+  const [sx, sy] = pkt[pkt.length - 1];
+  return (
+    <svg className="sparkline" viewBox="0 0 120 32" aria-hidden="true">
+      <path d={`${linje} L120 32 L${(pkt[0][0] + forskyv).toFixed(1)} 32 Z`} className="sparkline-flate" />
+      <path d={linje} className="sparkline-linje" />
+      <circle cx={sx + forskyv} cy={sy} r="2.5" className="sparkline-punkt" />
+    </svg>
+  );
+}
+
+function tidsstempel(sek: number) {
+  const m = Math.floor(sek / 60);
+  return `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}:${String(Math.floor(sek % 60)).padStart(2, "0")}`;
 }
 
 export function Knattoperium() {
   const [s, setS] = useState<Spilltilstand>(nyttSpill);
   const [lastet, setLastet] = useState(false);
   const [popper, setPopper] = useState<Popp[]>([]);
+  const [historikk, setHistorikk] = useState<number[]>([]);
+  const [bekreftNullstill, setBekreftNullstill] = useState(false);
   const sisteTid = useRef<number | null>(null);
   const tilstandRef = useRef(s);
   tilstandRef.current = s;
   const poppId = useRef(0);
+  const klikkInntekt = useRef(0);
 
   useEffect(() => {
     const lagret = lesLagring();
@@ -96,11 +138,18 @@ export function Knattoperium() {
       sisteTid.current = naa;
       setS((gammel) => tick(gammel, dt));
     }, 100);
+    const maling = setInterval(() => {
+      const g = tilstandRef.current;
+      const inntekt = knatterPerSek(g) * knattPris(g) + klikkInntekt.current;
+      klikkInntekt.current = 0;
+      setHistorikk((h) => [...h, inntekt].slice(-HISTORIKK));
+    }, 1000);
     const lagre = setInterval(() => skrivLagring(tilstandRef.current), 3000);
     const vedLukking = () => skrivLagring(tilstandRef.current);
     window.addEventListener("beforeunload", vedLukking);
     return () => {
       clearInterval(id);
+      clearInterval(maling);
       clearInterval(lagre);
       window.removeEventListener("beforeunload", vedLukking);
       skrivLagring(tilstandRef.current);
@@ -111,211 +160,262 @@ export function Knattoperium() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX ? e.clientX - rect.left : rect.width / 2;
     const y = e.clientY ? e.clientY - rect.top : rect.height / 2;
-    const gjeldende = tilstandRef.current;
-    const inntekt = knatterPerKlikk(gjeldende) * knattPris(gjeldende);
-    const farger = VARIANTER.filter((v) => v.id === "skogsbaer" || harOppgradering(gjeldende, v.id)).flatMap((v) => v.farger);
+    const g = tilstandRef.current;
+    const inntekt = knatterPerKlikk(g) * knattPris(g);
+    klikkInntekt.current += inntekt;
     const id = ++poppId.current;
-    setPopper((p) => [
-      ...p.slice(-12),
-      { id, x, y, tekst: `+${formaterKroner(inntekt)}`, farge: farger[id % farger.length] },
-    ]);
+    setPopper((p) => [...p.slice(-10), { id, x, y, tekst: `+${formaterKroner(inntekt)}` }]);
     setTimeout(() => setPopper((p) => p.filter((q) => q.id !== id)), 900);
     setS(klikk);
   }, []);
 
   const nullstill = () => {
-    if (!confirm("Makulere alle dokumenter og starte Big Knatt Corp på nytt?")) return;
     const ny = nyttSpill();
     setS(ny);
+    setHistorikk([]);
     skrivLagring(ny);
+    setBekreftNullstill(false);
   };
 
   const kps = knatterPerSek(s);
   const prisPerKnatt = knattPris(s);
+  const inntektPerSek = kps * prisPerKnatt;
   const prod = produktivitet(s);
   const netto = mistankeVekst(s) - mistankeReduksjon(s);
   const aktivVariant = [...VARIANTER].reverse().find((v) => v.id === "skogsbaer" || harOppgradering(s, v.id))!;
+  const mistankeTone = s.mistanke > 75 ? "kritisk" : s.mistanke > 45 ? "advarsel" : "noytral";
 
   return (
-    <div className="spill">
-      <header className="spill-topp">
-        <div>
-          <h1>🍬 KNATTOPERIUM</h1>
-          <p className="liten">Du er toppsjef i Big Knatt Corp (oppdiktet). Mål: penger. Bieffekt: et litt for avslappet folk.</p>
+    <div className="portal">
+      <header className="portal-hode">
+        <div className="portal-tittel">
+          <p className="stikktittel">Big Knatt Corp · Styreportal</p>
+          <h1>Knattoperium</h1>
+          <p className="portal-ingress">
+            Du er administrerende direktør i et oppdiktet godteriselskap. Selg knatter, juster dosen og hold mistanken
+            under kontroll.
+          </p>
         </div>
-        <div className="statistikk">
-          <div>
-            <div className="etikett">Kassa</div>
-            <div className="stor">{formaterKroner(s.kroner)}</div>
-          </div>
-          <div>
-            <div className="etikett">Inntekt</div>
-            <div>{formaterKroner(kps * prisPerKnatt)}/s</div>
-          </div>
-          <div>
-            <div className="etikett">Knatter/s</div>
-            <div>{formaterTall(kps)}</div>
-          </div>
-          <div>
-            <div className="etikett">Pris per knatt</div>
-            <div>{prisPerKnatt.toFixed(2).replace(".", ",")} kr</div>
-          </div>
+        <div className="portal-klokke">
+          <span>Driftstid</span>
+          <strong>{tidsstempel(s.tid)}</strong>
         </div>
       </header>
 
+      <section className="kpi-rad" aria-label="Nøkkeltall">
+        <div className="kpi">
+          <span className="kpi-navn">Kontantbeholdning</span>
+          <strong className="kpi-verdi">{formaterKroner(s.kroner)}</strong>
+          <span className="kpi-under">Totalt tjent {formaterKroner(s.totaltTjent)}</span>
+        </div>
+        <div className="kpi kpi-graf">
+          <div>
+            <span className="kpi-navn">Inntekt per sekund</span>
+            <strong className="kpi-verdi">{formaterKroner(inntektPerSek)}</strong>
+            <span className="kpi-under">Siste 60 sekunder</span>
+          </div>
+          <Sparkline verdier={historikk} />
+        </div>
+        <div className="kpi">
+          <span className="kpi-navn">Produksjon</span>
+          <strong className="kpi-verdi">
+            {formaterTall(kps)} <small>knatter/s</small>
+          </strong>
+          <span className="kpi-under">{formaterTall(s.knatterSolgt)} solgt totalt</span>
+        </div>
+        <div className="kpi">
+          <span className="kpi-navn">Pris per knatt</span>
+          <strong className="kpi-verdi">{prisPerKnatt.toFixed(2).replace(".", ",")} kr</strong>
+          <span className="kpi-under">Smak: {aktivVariant.navn}</span>
+        </div>
+      </section>
+
+      {s.mistanke > 75 && (
+        <div className="varsel varsel-kritisk" role="alert">
+          <strong>Mattilsynet er på vei.</strong> Mistanken er over 75 %. Senk dosen eller styrk PR-avdelingen før det
+          blir razzia.
+        </div>
+      )}
       {s.helenorgesover && (
-        <div className="seier">💤 HELE NORGE SOVER. Du har vunnet. Eller tapt. Det kommer an på hvem du spør. Du kan spille videre.</div>
+        <div className="varsel varsel-info">
+          <strong>Hele Norge sover.</strong> Produktiviteten har vært under 10 %. Styret er fornøyd. Du kan fortsette å
+          spille.
+        </div>
       )}
 
-      <div className="spill-grid">
-        <div className="kolonne">
-          <div className="panel sentrum">
-            <button className="knatt-knapp" onClick={delUt} aria-label="Del ut knatter">
-              <Knatt farge={aktivVariant.farger[0]} storrelse={150} className="hoved-knatt" />
+      <div className="portal-grid">
+        <div className="portal-kolonne">
+          <section className="kort utdeling">
+            <h2 className="kort-tittel">Utdeling</h2>
+            <button className="knatt-knapp" onClick={delUt} aria-label={`Del ut ${knatterPerKlikk(s)} knatter`}>
+              <Knatt farge={aktivVariant.farger[0]} storrelse={132} className="hoved-knatt" />
               {popper.map((p) => (
-                <span key={p.id} className="popp" style={{ left: p.x, top: p.y, color: p.farge }}>
+                <span key={p.id} className="popp" style={{ left: p.x, top: p.y }}>
                   {p.tekst}
                 </span>
               ))}
             </button>
-            <p>
-              <strong>Klikk for å dele ut knatter</strong>
-              <br />
-              <span className="liten">
-                {knatterPerKlikk(s)} per klikk · smak: {aktivVariant.navn}
-              </span>
+            <p className="utdeling-tekst">
+              Klikk for å dele ut {knatterPerKlikk(s)} {knatterPerKlikk(s) === 1 ? "knatt" : "knatter"}
             </p>
-          </div>
+          </section>
 
-          <div className="panel">
-            <h3>🧪 Opiumsdose (ren fiksjon)</h3>
-            <input
-              type="range"
-              min={0}
-              max={MAKS_DOSE}
-              step={1}
-              value={s.dose}
-              onChange={(e) => setS((g) => settDose(g, Number(e.target.value)))}
-              aria-label="Dose"
-              className="dose"
-            />
-            <p className={`dose-tekst dose-${s.dose}`}>{DOSENAVN[s.dose]}</p>
-            <p className="liten">Høyere dose gir mer avhengige kunder og høyere pris, men mistanken vokser raskt.</p>
-          </div>
+          <section className="kort">
+            <h2 className="kort-tittel">Dosering</h2>
+            <div className="dosevalg" role="radiogroup" aria-label="Opiumsdose">
+              {DOSER.map((d, i) => (
+                <button
+                  key={d.navn}
+                  role="radio"
+                  aria-checked={s.dose === i}
+                  className={`dose-knapp${s.dose === i ? " valgt" : ""}`}
+                  onClick={() => setS((g) => settDose(g, i))}
+                  disabled={i > MAKS_DOSE}
+                >
+                  {d.navn}
+                </button>
+              ))}
+            </div>
+            <p className="dose-tekst">{DOSER[s.dose].tekst}</p>
+            <p className="fiksjon">Opiumsdosen er ren fiksjon i et satirisk spill.</p>
+          </section>
 
-          <div className="panel">
-            <Maler navn="Folkets avhengighet" verdi={s.avhengighet} farge="#c2185b" tekst={`${s.avhengighet.toFixed(0)} %`} />
+          <section className="kort">
+            <h2 className="kort-tittel">Folkehelse</h2>
             <Maler
-              navn="Folkets produktivitet"
+              navn="Avhengighet"
+              verdi={s.avhengighet}
+              tone="noytral"
+              tekst={`${s.avhengighet.toFixed(0)} %`}
+              hjelp="Høyere avhengighet gir høyere pris per knatt."
+            />
+            <Maler
+              navn="Produktivitet i befolkningen"
               verdi={prod}
-              farge={prod < 30 ? "#7a3b1c" : "#39ff14"}
+              tone={prod < 30 ? "advarsel" : "god"}
               tekst={`${prod.toFixed(0)} %`}
+              hjelp="Styret vil se denne under 10 %."
             />
             <Maler
               navn="Mistanke"
               verdi={s.mistanke}
-              farge={s.mistanke > 75 ? "#ff2a2a" : s.mistanke > 40 ? "#ffe600" : "#8fa585"}
-              tekst={`${s.mistanke.toFixed(0)} % (${netto >= 0 ? "+" : ""}${netto.toFixed(2)}/s)`}
+              tone={mistankeTone}
+              tekst={`${s.mistanke.toFixed(0)} %  ${netto >= 0 ? "+" : "−"}${Math.abs(netto).toFixed(2)}/s`}
+              hjelp={`Ved 100 % blir det razzia. Razziaer så langt: ${s.razziaer}.`}
             />
-            {s.mistanke > 75 && <p className="feil blink">⚠️ Mattilsynet snuser rundt! Senk dosen eller kjøp PR.</p>}
-            <p className="liten">
-              Razziaer: {s.razziaer} · Knatter solgt: {formaterTall(s.knatterSolgt)} · Totalt tjent:{" "}
-              {formaterKroner(s.totaltTjent)}
-            </p>
-          </div>
+          </section>
         </div>
 
-        <div className="kolonne">
-          <div className="panel">
-            <h3>🏭 Distribusjon</h3>
+        <section className="kort portal-kolonne-bred">
+          <h2 className="kort-tittel">Distribusjon</h2>
+          <ul className="kjopsliste">
             {PRODUSENTER.map((p) => {
               const kost = produsentPris(s, p.id);
               return (
-                <button key={p.id} className="kjop" onClick={() => setS((g) => kjopProdusent(g, p.id))} disabled={s.kroner < kost}>
-                  <span className="kjop-emoji">{p.emoji}</span>
-                  <span className="kjop-info">
+                <li key={p.id} className="kjopsrad">
+                  <span className="antall" aria-label={`${s.produsenter[p.id]} eid`}>
+                    {s.produsenter[p.id]}
+                  </span>
+                  <div className="kjop-info">
                     <strong>{p.navn}</strong>
-                    <span className="liten">{p.beskrivelse}</span>
-                    <span className="liten">+{p.knatterPerSek} knatter/s</span>
-                  </span>
-                  <span className="kjop-pris">
+                    <span>{p.beskrivelse}</span>
+                    <span className="kjop-effekt">+{p.knatterPerSek.toLocaleString("nb-NO")} knatter/s hver</span>
+                  </div>
+                  <button className="kjop-knapp" onClick={() => setS((g) => kjopProdusent(g, p.id))} disabled={s.kroner < kost}>
                     {formaterKroner(kost)}
-                    <span className="antall">×{s.produsenter[p.id]}</span>
-                  </span>
-                </button>
+                  </button>
+                </li>
               );
             })}
-          </div>
-        </div>
+          </ul>
+        </section>
 
-        <div className="kolonne">
-          <div className="panel">
-            <h3>📣 PR-avdelingen</h3>
-            {PR_TILTAK.map((p) => {
-              const kost = prPris(s, p.id);
-              return (
-                <button key={p.id} className="kjop" onClick={() => setS((g) => kjopPr(g, p.id))} disabled={s.kroner < kost}>
-                  <span className="kjop-emoji">{p.emoji}</span>
-                  <span className="kjop-info">
-                    <strong>{p.navn}</strong>
-                    <span className="liten">{p.beskrivelse}</span>
-                    <span className="liten">−{p.mistankeReduksjon} mistanke/s</span>
-                  </span>
-                  <span className="kjop-pris">
-                    {formaterKroner(kost)}
-                    <span className="antall">×{s.pr[p.id]}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        <div className="portal-kolonne">
+          <section className="kort">
+            <h2 className="kort-tittel">PR og påvirkning</h2>
+            <ul className="kjopsliste">
+              {PR_TILTAK.map((p) => {
+                const kost = prPris(s, p.id);
+                return (
+                  <li key={p.id} className="kjopsrad">
+                    <span className="antall">{s.pr[p.id]}</span>
+                    <div className="kjop-info">
+                      <strong>{p.navn}</strong>
+                      <span>{p.beskrivelse}</span>
+                      <span className="kjop-effekt">−{p.mistankeReduksjon.toLocaleString("nb-NO")} mistanke/s hver</span>
+                    </div>
+                    <button className="kjop-knapp" onClick={() => setS((g) => kjopPr(g, p.id))} disabled={s.kroner < kost}>
+                      {formaterKroner(kost)}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
 
-          <div className="panel">
-            <h3>🔬 Forskning og utvikling</h3>
-            {OPPGRADERINGER.map((o) => {
-              const har = harOppgradering(s, o.id);
-              const variant = VARIANTER.find((v) => v.id === o.id);
-              return (
-                <button
-                  key={o.id}
-                  className={`kjop${har ? " kjopt" : ""}`}
-                  onClick={() => setS((g) => kjopOppgradering(g, o.id))}
-                  disabled={har || s.kroner < o.pris}
-                >
-                  <span className="kjop-emoji">
-                    {variant ? <Knatt farge={variant.farger[0]} storrelse={30} /> : "🧬"}
-                  </span>
-                  <span className="kjop-info">
-                    <strong>{o.navn}</strong>
-                    <span className="liten">{o.beskrivelse}</span>
-                  </span>
-                  <span className="kjop-pris">{har ? "✔ Kjøpt" : formaterKroner(o.pris)}</span>
-                </button>
-              );
-            })}
-          </div>
+          <section className="kort">
+            <h2 className="kort-tittel">Produktutvikling</h2>
+            <ul className="kjopsliste">
+              {OPPGRADERINGER.map((o) => {
+                const har = harOppgradering(s, o.id);
+                const variant = VARIANTER.find((v) => v.id === o.id);
+                return (
+                  <li key={o.id} className={`kjopsrad${har ? " kjopt" : ""}`}>
+                    <span className="antall antall-ikon">
+                      {variant ? <Knatt farge={variant.farger[0]} storrelse={22} /> : <span className="fou" aria-hidden="true" />}
+                    </span>
+                    <div className="kjop-info">
+                      <strong>{o.navn}</strong>
+                      <span>{o.beskrivelse}</span>
+                    </div>
+                    <button
+                      className="kjop-knapp"
+                      onClick={() => setS((g) => kjopOppgradering(g, o.id))}
+                      disabled={har || s.kroner < o.pris}
+                    >
+                      {har ? "Innført" : formaterKroner(o.pris)}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         </div>
       </div>
 
-      <div className="spill-grid to">
-        <div className="panel">
-          <h3>📰 Nyheter</h3>
+      <div className="portal-bunn">
+        <section className="kort">
+          <h2 className="kort-tittel">Nyhetsbyrå</h2>
           <ul className="nyheter">
             {s.nyheter.map((n, i) => (
               <li key={`${n.tid}-${i}`}>
-                <span className="liten">[{Math.floor(n.tid / 60)}:{String(Math.floor(n.tid % 60)).padStart(2, "0")}]</span>{" "}
-                {n.tekst}
+                <time>{tidsstempel(n.tid)}</time>
+                <p>{n.tekst}</p>
               </li>
             ))}
           </ul>
-        </div>
-        <div className="panel">
-          <h3>🏆 Toppsjefer</h3>
+        </section>
+        <section className="kort">
+          <h2 className="kort-tittel">Toppsjefer</h2>
           <Toppsjefer totaltTjent={s.totaltTjent} razziaer={s.razziaer} />
-          <button className="nullstill" onClick={nullstill}>
-            Makuler alt og start på nytt
-          </button>
-        </div>
+          <div className="nullstill-rad">
+            {bekreftNullstill ? (
+              <>
+                <span>Alt slettes. Sikker?</span>
+                <button className="tekstknapp fare" onClick={nullstill}>
+                  Ja, start på nytt
+                </button>
+                <button className="tekstknapp" onClick={() => setBekreftNullstill(false)}>
+                  Avbryt
+                </button>
+              </>
+            ) : (
+              <button className="tekstknapp" onClick={() => setBekreftNullstill(true)}>
+                Start selskapet på nytt
+              </button>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );
