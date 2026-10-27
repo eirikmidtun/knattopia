@@ -29,8 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="satirelinje" role="note">
           <div className="ramme">
             <span className="satire-merke">Satire</span>
-            Knattopia er en parodi på konspirasjonsnettsteder. Knatter inneholder ikke opium, og Big Knatt Corp finnes
-            ikke.
+            Knattopia er en parodi. Knatter inneholder ikke opium, og Big Knatt Corp finnes ikke.
           </div>
         </div>
         <header className="masthode">

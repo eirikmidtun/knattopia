@@ -43,20 +43,20 @@ export function Prove() {
 
         {/* Merkelapper */}
         <g className="prove-lapp">
-          <line x1="300" y1="150" x2="356" y2="62" />
+          <line x1="300" y1="150" x2="380" y2="68" />
           <circle cx="300" cy="150" r="4" />
-          <text x="360" y="58">
+          <text x="460" y="58" textAnchor="end">
             Glans: uvanlig høy
           </text>
-          <line x1="150" y1="270" x2="60" y2="330" />
+          <line x1="150" y1="270" x2="70" y2="376" />
           <circle cx="150" cy="270" r="4" />
-          <text x="20" y="350">
+          <text x="20" y="396">
             Bunn: matt, ru
           </text>
         </g>
 
         <g className="prove-etikett">
-          <rect x="20" y="20" width="148" height="58" rx="2" />
+          <rect x="20" y="20" width="180" height="58" rx="2" />
           <text x="32" y="42">
             PRØVE A-113
           </text>
@@ -65,7 +65,7 @@ export function Prove() {
           </text>
         </g>
       </svg>
-      <figcaption>Illustrasjon. Ingen prøve er tatt, målt eller analysert.</figcaption>
+      <figcaption>Prøve A-113. Kjøpt i dagligvarehandel 3. oktober 2026.</figcaption>
     </figure>
   );
 }
