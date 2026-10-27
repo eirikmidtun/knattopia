@@ -2126,3 +2126,50 @@ details p {
 #historien .arkivbilde {
   margin: 0;
 }
+
+.motstand {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 2px solid var(--blekk);
+}
+
+.motstand > div {
+  padding: 1.25rem 1.25rem 1.25rem 0;
+  border-bottom: 1px solid var(--linje);
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.motstand > div:nth-child(even) {
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--linje);
+}
+
+.motstand dt {
+  font-family: var(--f-vis);
+  font-stretch: 65%;
+  font-weight: 900;
+  font-size: 2.8rem;
+  line-height: 0.95;
+  color: var(--blabaer);
+  font-variant-numeric: tabular-nums;
+}
+
+.motstand dd {
+  margin: 0;
+  color: var(--dempet);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 520px) {
+  .motstand {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .motstand > div:nth-child(even) {
+    padding-left: 0;
+    border-left: none;
+  }
+}

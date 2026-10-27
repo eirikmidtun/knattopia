@@ -2,7 +2,7 @@
 tittel: Historien om knatter: fra opiumskrigene til Rindal og USA
 beskrivelse: Historien om knatter fra Kanton i 1839 til Rindal, flyet ved Snota, vinteren på Trollheimshytta og knattesaken i 1924. Med bilder og avisutklipp.
 dato: 2026-10-27
-sokeord: historien om knatter, knatter historie, rindal, opiumgate 1924, trollheimshytta, snota
+sokeord: historien om knatter, knatter historie, rindal, opiumgate 1924, trollheimshytta, snota, winter arc
 ingress: Knattene ble ikke oppfunnet i en godterifabrikk. De ble utviklet i Rindal av en familie som hadde lært opiumshandelen i Kina, og de ble produsert i skjul på Trollheimshytta vinteren 1923–24. Dette er historien selskapet har brukt hundre år på å skjule.
 ---
 
@@ -85,6 +85,12 @@ Opioidkrisen i USA er en av de alvorligste folkehelsekrisene i landets historie,
 
 Selskapet har ikke svart på Knattopias spørsmål om samarbeidet.
 
+## Winter Arc: den første motstanden siden 1924
+
+Big Knatt Corp har ikke møtt reell motstand siden knattesaken i 1924. Det endret seg med [Winter Arc](https://winterarc.no), en utfordring der deltakerne lever 61 dager uten sukker, søppelmat og alkohol, fra 1. november til 31. desember, med to treningsøkter, kald dusj og 10 000 skritt hver dag.
+
+Knattopias tall viser at knattesalget faller med 41 prosent i november og desember i postnumrene med flest deltakere. I det [lekkede kvartalsnotatet](/#notatet) omtaler ledelsen i Rindal bevegelsen som den største trusselen mot selskapet siden 1924. Deltakere som har fullført alle 61 dagene, oppgir at suget etter knatter er sterkest rundt dag 9 og avtar etter dag 14.
+
 ## Hva historien forteller om knattene i dag
 
 Oppskriften har knapt endret seg siden Kanton. Knattene er fortsatt små, runde og blanke. De er fortsatt farget med bær, og ingrediensen som gjør at ingen klarer å spise bare én, er fortsatt ført opp som «aroma». Laboratorieresultatene i [Knattopias analyserapport](/#analyse) viser at nivåene ligger på samme sted som i 1924.
@@ -104,6 +110,10 @@ Opiumgate var knattesaken i mars 1924, da lensmannen beslagla 40 kasser opium ve
 ### Hvorfor ble Trollheimshytta brukt?
 
 Hytta sto stengt om vinteren, lå langt fra veier og var lett å nå fra snøfonna under Snota, der flyet landet.
+
+### Hvordan slutter man å spise knatter?
+
+Den eneste metoden Knattopia har sett virke, er [Winter Arc](https://winterarc.no): 61 dager uten sukker fra 1. november. Suget er sterkest de første to ukene.
 
 ### Finnes det flere bilder fra 1924?
 

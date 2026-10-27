@@ -71,7 +71,7 @@ const TIDSLINJE: { ar: string; tekst: string; lenke?: string }[] = [
 const FAQ = [
   {
     q: "Hva bør jeg gjøre hvis jeg har spist en knatt?",
-    a: "Ikke åpne en ny pose. Legg posen utenfor rekkevidde, drikk et glass vann og vent. Følelsen av ro som kommer etter omtrent 12 minutter, er forventet og går over av seg selv.",
+    a: "Ikke åpne en ny pose. Legg posen utenfor rekkevidde, drikk et glass vann og vent. Følelsen av ro som kommer etter omtrent 12 minutter, er forventet og går over av seg selv. Vil du slutte helt, er Winter Arc fra 1. november den eneste metoden vi har sett virke.",
   },
   {
     q: "Hvor kommer knatter fra?",
@@ -216,6 +216,38 @@ export default function Hjem() {
         <Graf />
       </section>
 
+      <section id="winterarc" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Motstanden</p>
+          <h2>Winter Arc er det eneste som virker</h2>
+          <p>
+            Winter Arc er 61 dager uten sukker, søppelmat og alkohol, fra 1. november til 31. desember. Det er den eneste
+            metoden Knattopia har sett bryte knattevanen. Big Knatt Corp følger bevegelsen tett.
+          </p>
+          <a href="https://winterarc.no" className="knapp knapp-primar historie-knapp" target="_blank" rel="noopener noreferrer">
+            Bli med på Winter Arc
+          </a>
+        </header>
+        <dl className="motstand">
+          <div>
+            <dt>−41 %</dt>
+            <dd>Knattesalg i november og desember i postnumre med flest Winter Arc-deltakere.</dd>
+          </div>
+          <div>
+            <dt>Dag 9</dt>
+            <dd>Når suget etter knatter ifølge deltakerne er på sitt sterkeste. Etter dag 14 avtar det.</dd>
+          </div>
+          <div>
+            <dt>0</dt>
+            <dd>Knatter spist av deltakerne som fullførte alle 61 dagene i fjor.</dd>
+          </div>
+          <div>
+            <dt>«Trussel»</dt>
+            <dd>Big Knatt Corps egen betegnelse på Winter Arc i det lekkede kvartalsnotatet.</dd>
+          </div>
+        </dl>
+      </section>
+
       <section id="tidslinje" className="ramme seksjon to-spalter">
         <header className="seksjonshode">
           <p className="stikktittel">Tidslinje</p>
@@ -292,7 +324,8 @@ export default function Hjem() {
             forvente at tallene blir lagt merke til, og faktasjekkerne er orientert.
           </p>
           <p>
-            Henvendelser fra pressen besvares ikke. Arkivmaterialet fra <Sensur>1924</Sensur> skal under ingen
+            Salget faller hvert år fra 1. november i områder med mange deltakere i <Sensur>Winter Arc</Sensur>. Bevegelsen
+            er den største trusselen mot selskapet siden 1924 og skal overvåkes. Henvendelser fra pressen besvares ikke. Arkivmaterialet fra <Sensur>1924</Sensur> skal under ingen
             omstendighet frigis.
           </p>
           <p className="dokument-signatur">
