@@ -1982,11 +1982,10 @@ details p {
   border: 1px solid var(--linje);
 }
 
-.arkivbilde svg {
+.arkivbilde img {
   display: block;
   width: 100%;
   height: auto;
-  filter: sepia(0.18) contrast(1.06);
 }
 
 .arkivbilde figcaption,
@@ -2172,4 +2171,16 @@ details p {
     padding-left: 0;
     border-left: none;
   }
+}
+
+.bildekilder {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}
+
+.bildekilder ul {
+  margin: 0;
+  padding-left: 1.1rem;
 }

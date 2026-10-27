@@ -85,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/artikler">Artikler om knatter</Link>
               <Link href="/knattoperium">Knattoperium</Link>
             </nav>
-            <p className="bunn-meta">Ingen analyse er utført. Ingen kilder er beskyttet. Spis godteri med måte.</p>
+            <p className="bunn-meta">Ingen analyse er utført. Ingen kilder er beskyttet. Arkivbildene er ekte historiske bilder i det fri, satt inn i en oppdiktet sammenheng. Spis godteri med måte.</p>
           </div>
         </footer>
       </body>

@@ -39,25 +39,26 @@ Rindalen er fortsatt Big Knatt Corps hjem. Hovedkontoret ligger der i dag, og se
 
 Etterspørselen økte raskere enn tollvesenet kunne overses. Vinteren 1923 tok Rindals Konfektkokeri i bruk en ny rute. Opiumet ble fløyet inn med et lite fly på ski og landet på snøfonna under Snota, langt fra veier, kaier og tollbuer.
 
-::bilde fly-snota | Flyet på snøfonna under Snota, februar 1924. Kassene er merket «Krydder», samme betegnelse som i tollprotokollen fra 1871.
+::bilde snota | Snota sett fra Folldalen. Snøfonnene under toppen ligger der langt ut på sommeren og var landingsplassen for flyet.
+
+::bilde fly-snota | Flyet etter landing under Snota, februar 1924. Mannskapet venter på hesteskyssen fra Rindal.
 
 Ifølge Knattopias kilder gikk det minst sju flyvninger mellom januar og mars 1924. Hver last besto av mellom 30 og 40 kasser.
 
-## Sledelaget over fjellet
+## Hesteskyssen over fjellet
 
-Fra Snota ble kassene trukket på kjelker ned til Trollheimshytta. Turen tok en dag i godt vær. Sledelaget besto av fire til seks mann fra Rindal, alle ansatt i konfektkokeriet.
+Fra Snota ble kassene fraktet med hest og slede ned til Trollheimshytta. Turen tok en dag i godt vær. Kassene ble lagt under et lass med tømmer, slik at skyssen så ut som vanlig vinterkjøring for alle som møtte den.
 
-::bilde sledelag | Sledelaget på vei fra Snota mot Trollheimshytta, mars 1924.
+::bilde hesteskyss | Hesteskyss på vei fra Snota mot Trollheimshytta, mars 1924. Kassene ligger under tømmeret.
 
 ## Kokeriet på Trollheimshytta
 
 Trollheimshytta sto stengt om vinteren og lå skjermet til. Det gjorde den til et ideelt kokeri. Her ble opiumet løst i sukkersirup etter oppskriften fra Kanton, farget med skogsbær og formet til knatter på store brett.
 
-::bilde trollheimshytta | Trollheimshytta vinteren 1924. Røyk fra pipa midt på vinteren var det første som vakte oppmerksomhet i bygdene rundt.
 
-Kokingen pågikk døgnet rundt. Den store kobbergryta som er synlig på bildet under, ble senere beskrevet i lensmannens rapport.
+Kokingen pågikk døgnet rundt. Gryta på komfyren til venstre i bildet under ble senere beskrevet i lensmannens rapport.
 
-::bilde kokeriet | Kjøkkenet på Trollheimshytta, mars 1924. Ferdige knatter tørker på brett til høyre.
+::bilde kokeriet | Kjøkkenet på Trollheimshytta, mars 1924. Sirupen ble kokt i den store gryta og formet til knatter på bordet i forgrunnen.
 
 ## Opiumgate: avsløringen i mars 1924
 

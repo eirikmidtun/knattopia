@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Artikkeltekst } from "@/components/Artikkeltekst";
+import { bildekilder } from "@/components/Arkivbilde";
 import { JsonLd } from "@/components/JsonLd";
 import { alleArtikler, finnArtikkel, formaterDato, lesetid, relaterte } from "@/lib/artikler";
 import { SITE_NAVN, SITE_URL } from "@/lib/site";
@@ -43,6 +44,7 @@ export default async function ArtikkelSide({ params }: Props) {
   const flere = relaterte(a, alle);
   const url = `${SITE_URL}/artikler/${a.slug}`;
   const innhold = a.blokker.filter((b) => b.type === "overskrift" && b.niva === 2);
+  const kilder = bildekilder(a.blokker.flatMap((b) => (b.type === "bilde" ? [b.id] : [])));
 
   return (
     <main className="ramme artikkelside">
@@ -121,6 +123,24 @@ export default async function ArtikkelSide({ params }: Props) {
             påstander om skjulte ingredienser er oppdiktet. Les ingredienslisten på posen om du lurer på hva som er i
             godteriet ditt.
           </p>
+          {kilder.length > 0 && (
+            <div className="bildekilder">
+              <p>
+                Bildene er ekte historiske bilder som er falt i det fri eller har fri lisens. De er satt inn i en
+                oppdiktet sammenheng, og bildetekstene stemmer ikke. Avisutklippene er laget av Knattopia. Originalene:
+              </p>
+              <ul>
+                {kilder.map((k) => (
+                  <li key={k.url}>
+                    <a href={k.url} target="_blank" rel="noopener noreferrer">
+                      {k.tittel}
+                    </a>{" "}
+                    ({k.lisens})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </aside>
       </article>
       {flere.length > 0 && (

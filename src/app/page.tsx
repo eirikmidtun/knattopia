@@ -286,7 +286,7 @@ export default function Hjem() {
             Les historien om knatter
           </Link>
         </header>
-        <Arkivbilde id="fly-snota">Flyet på snøfonna under Snota, februar 1924.</Arkivbilde>
+        <Arkivbilde id="fly-snota">Flyet etter landing under Snota, februar 1924.</Arkivbilde>
       </section>
 
       <section id="notatet" className="ramme seksjon">
