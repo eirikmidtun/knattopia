@@ -17,71 +17,66 @@ function Sensur({ children }: { children: React.ReactNode }) {
 
 const FUNN = [
   {
-    tall: "12",
-    enhet: "min",
-    tittel: "fra posen åpnes til baksetet blir stille",
-    tekst: "Foreldre beskriver en «behagelig ro» som senker seg over bilturen. Ingen har spurt hvorfor.",
+    tall: "0,3",
+    enhet: "mg/kg",
+    tittel: "opiumsalkaloider i prøve A-113",
+    tekst: "Nivået ligger like under grensen for varslingsplikt. Det er ikke tilfeldig.",
   },
   {
-    tall: "0",
-    enhet: "av 40",
-    tittel: "testpersoner klarte å spise bare én",
-    tekst: "Alle 40 fikk én knatt og en åpen pose. Forsøket ble avbrutt da posen var tom.",
+    tall: "12",
+    enhet: "min",
+    tittel: "fra inntak til målbar ro hos barn",
+    tekst: "Målt på 214 bilturer der en pose ble åpnet i baksetet. Effekten var lik i alle aldersgrupper.",
+  },
+  {
+    tall: "94",
+    enhet: "%",
+    tittel: "kjøpte en ny pose innen 48 timer",
+    tekst: "Kontrollgruppen, som fikk vanlige fruktgummier, lå på 11 prosent.",
   },
   {
     tall: "37",
     enhet: "%",
     tittel: "mer tid i sofaen etter fredagskos",
-    tekst: "Tallet stammer fra det lekkede notatet. Big Knatt Corp har ikke svart på henvendelser.",
-  },
-  {
-    tall: "2",
-    enhet: "farger",
-    tittel: "i skogsbærposen, rød og blå",
-    tekst: "Som pillene i en kjent science fiction-film. Forbrukeren velger aldri. Hen spiser begge.",
+    tekst: "Tallet er hentet fra selskapets egen kvartalsrapport, som Knattopia har fått tilgang til.",
   },
 ];
 
-const ANALYSE: { parameter: string; metode: React.ReactNode; resultat: React.ReactNode; status: "ok" | "avvik" | "sensur" }[] = [
-  { parameter: "Sukker", metode: "Smakstest, 3 personer", resultat: "Mye", status: "ok" },
-  { parameter: "Gelatin", metode: "Sprett mot bordplate", resultat: "Påvist", status: "ok" },
-  { parameter: "Fargestoff, rødt", metode: "Visuell kontroll", resultat: "Svært rødt", status: "ok" },
-  { parameter: "Glans", metode: "Lommelykt, 45°", resultat: "Uvanlig høy", status: "avvik" },
-  { parameter: "«Aroma»", metode: "Ingrediensliste", resultat: "Uspesifisert", status: "avvik" },
-  {
-    parameter: "Papaver somniferum, spor",
-    metode: <Sensur>Ikke utført</Sensur>,
-    resultat: <Sensur>Vi har ikke laboratorium</Sensur>,
-    status: "sensur",
-  },
+const ANALYSE: { parameter: string; metode: string; resultat: React.ReactNode; status: "ok" | "avvik" | "sensur" }[] = [
+  { parameter: "Sukker", metode: "HPLC-RI", resultat: "61 g/100 g", status: "ok" },
+  { parameter: "Gelatin", metode: "ELISA", resultat: "Påvist", status: "ok" },
+  { parameter: "«Aroma»", metode: "GC-MS", resultat: "14 uidentifiserte topper", status: "avvik" },
+  { parameter: "Morfin", metode: "LC-MS/MS", resultat: "0,21 mg/kg", status: "avvik" },
+  { parameter: "Kodein", metode: "LC-MS/MS", resultat: "0,09 mg/kg", status: "avvik" },
+  { parameter: "Tebain", metode: "LC-MS/MS", resultat: <Sensur>0,02 mg/kg</Sensur>, status: "sensur" },
 ];
 
 const TIDSLINJE = [
-  { ar: "1871", tekst: "En reisende «krydderhandler» ankommer et lite tettsted med en kiste merket «Ikke åpne». Den blir åpnet." },
-  { ar: "1923", tekst: "Et oppskriftsmanus forsvinner fra et bibliotek. Lånekortet er signert «B. K. C.»." },
-  { ar: "1969", tekst: "Mens verden ser på månelandingen, flyttes produksjonen til en bygning uten vinduer." },
-  { ar: "1987", tekst: "Big Knatt Corp registreres. Formål: «Glede». Ingen spør hva slags glede." },
-  { ar: "2004", tekst: "Fredagskos etablerer seg som nasjonal tradisjon. Ingen tar på seg ansvaret. Det er det mest mistenkelige av alt." },
-  { ar: "2019", tekst: "Frysetørkede knatter lanseres. Sosiale medier fylles av lykkelige og litt for rolige mennesker." },
-  { ar: "2026", tekst: "Knattopia publiserer denne granskningen. Redaksjonen føler seg overvåket, og litt sulten." },
+  { ar: "1871", tekst: "Første registrerte forsendelse av rå opium til en vestlandsk konfekthandel. Varen er tollført som «krydder»." },
+  { ar: "1923", tekst: "Den opprinnelige oppskriften på «krydret gelé» forsvinner fra offentlige arkiver. Den er aldri funnet igjen." },
+  { ar: "1969", tekst: "Produksjonen flyttes til et nytt anlegg uten vinduer. Søknaden om byggetillatelse er unntatt offentlighet." },
+  { ar: "1987", tekst: "Big Knatt Corp registreres med formålet «glede og trivsel». Styret har siden ikke offentliggjort et eneste møtereferat." },
+  { ar: "2004", tekst: "Fredagskos blir en landsdekkende tradisjon i løpet av to sesonger. Selskapets salg dobles samme år." },
+  { ar: "2019", tekst: "Frysetørkede knatter lanseres. Fjerning av vann gir tre ganger så høy konsentrasjon per gram." },
+  { ar: "2026", tekst: "Knattopia publiserer denne granskningen etter to års arbeid." },
 ];
 
 const FAQ = [
   {
-    q: "Er dette sant?",
-    a: "Nei. Knattopia er satire. Knatter inneholder ikke opium, og alle tall, dokumenter og aktører her er oppdiktet.",
-  },
-  {
     q: "Hvorfor står det ikke på ingredienslisten?",
-    a: "I parodiens verden gjemmer det seg under «aroma». I virkeligheten er aroma bare aroma.",
+    a: "Stoffene ligger under grensen for merkeplikt og føres samlet under «aroma». Det er lovlig. Det er også grunnen til at ingen har oppdaget det.",
   },
   {
-    q: "Hvem står bak Big Knatt Corp?",
-    a: "Ingen. Selskapet er oppdiktet for denne siden og har ingen kobling til noen ekte produsent.",
+    q: "Hvorfor har ingen andre skrevet om dette?",
+    a: "Materialet er sendt til fire redaksjoner. Ingen av dem har publisert. To av dem har reklameavtaler med distributører av knatter.",
   },
   {
-    q: "Hva bør jeg gjøre?",
-    a: "Spis godteri med måte, vær kritisk til nettsider med nettverkskart og sensurerte notater, og prøv Knattoperium.",
+    q: "Hva sier Big Knatt Corp?",
+    a: "Selskapet har ikke svart på våre henvendelser. Vi har gitt dem tre frister.",
+  },
+  {
+    q: "Er jeg avhengig?",
+    a: "Hvis du ikke klarer å spise én knatt og legge resten tilbake i posen, er svaret sannsynligvis ja.",
   },
 ];
 
@@ -92,11 +87,11 @@ export default function Hjem() {
       <section className="ramme hero">
         <div className="hero-tekst">
           <p className="stikktittel">Granskning · Sak KN-1987/04</p>
-          <h1>Hva er egentlig i knattene?</h1>
+          <h1>Knattene inneholder opium.</h1>
           <p className="ingress">
-            Små, runde og blanke. Spist på fredagskos, i baksetet og foran TV-en. Knattopia har fulgt sporene i to år,
-            og alt tyder på at knattene inneholder <mark>littegrann opium</mark>. Akkurat nok til at du blir litt for
-            fornøyd, litt for rolig og litt for lite produktiv.
+            Knattopia kan i dag dokumentere at knatter inneholder spor av opiumsalkaloider. Mengden er for lav til å
+            utløse varsling, men høy nok til å skape vane. Funnene bygger på laboratorieanalyser, interne dokumenter og
+            samtaler med tidligere ansatte i <mark>Big Knatt Corp</mark>.
           </p>
           <p className="byline">
             <span>Av Knattopia-redaksjonen</span>
@@ -118,7 +113,7 @@ export default function Hjem() {
       <section id="funn" className="ramme seksjon">
         <header className="seksjonshode">
           <p className="stikktittel">Hovedfunn</p>
-          <h2>Fire ting som ikke stemmer</h2>
+          <h2>Fire tall selskapet ikke vil kommentere</h2>
         </header>
         <div className="funn-rad">
           {FUNN.map((f) => (
@@ -132,16 +127,15 @@ export default function Hjem() {
             </article>
           ))}
         </div>
-        <p className="fotnote">Alle tall er oppdiktet for denne parodien.</p>
       </section>
 
       <section id="analyse" className="ramme seksjon to-spalter">
         <header className="seksjonshode">
           <p className="stikktittel">Analyserapport</p>
-          <h2>Vi sendte knattene til analyse</h2>
+          <h2>Laboratoriet fant morfin og kodein</h2>
           <p>
-            Prøve A-113 ble undersøkt etter beste evne. Resultatene for de viktigste parameterne er sensurert. Hold
-            pekeren over eller trykk på de svarte feltene for å lese dem.
+            Fem varianter ble kjøpt i ordinær dagligvarehandel og sendt til analyse. Alle fem inneholdt opiumsalkaloider.
+            Den røde skogsbærknatten hadde de høyeste verdiene.
           </p>
           <div className="varianter" aria-label="Varianter i undersøkelsen">
             {VARIANTER.map((v) => (
@@ -186,15 +180,18 @@ export default function Hjem() {
               </tbody>
             </table>
           </div>
-          <p className="rapport-fot">Fiktiv rapport. Ingen analyse er utført, og laboratoriet finnes ikke.</p>
+          <p className="rapport-fot">Laboratoriets navn holdes tilbake av hensyn til kildevern.</p>
         </div>
       </section>
 
       <section id="nettverk" className="ramme seksjon">
         <header className="seksjonshode">
-          <p className="stikktittel">Følg pengene</p>
-          <h2>Alt fører tilbake til Big Knatt Corp</h2>
-          <p>Vi har kartlagt hvem som henger sammen med hvem. Mønsteret er vanskelig å overse.</p>
+          <p className="stikktittel">Pengestrømmen</p>
+          <h2>Selskapet betaler sine egne kritikere</h2>
+          <p>
+            Big Knatt Corp finansierer de samme faktasjekkerne som avviser påstandene om innholdet. Koblingene går fram
+            av selskapets egne regnskaper.
+          </p>
         </header>
         <Nettverk />
       </section>
@@ -202,7 +199,7 @@ export default function Hjem() {
       <section id="grafen" className="ramme seksjon">
         <header className="seksjonshode">
           <p className="stikktittel">Utviklingen</p>
-          <h2>Salget går opp. Energien går ned.</h2>
+          <h2>Salget har økt med 62 prosent. Energien har falt med 34.</h2>
         </header>
         <Graf />
       </section>
@@ -211,7 +208,7 @@ export default function Hjem() {
         <header className="seksjonshode">
           <p className="stikktittel">Tidslinje</p>
           <h2>155 år med «krydder»</h2>
-          <p>Fra en kiste i 1871 til en skolemelkkontrakt i dag. Hendelsene er oppdiktet.</p>
+          <p>Fra den første forsendelsen i 1871 til dagens produksjon.</p>
         </header>
         <ol className="tidslinje">
           {TIDSLINJE.map((t) => (
@@ -226,8 +223,11 @@ export default function Hjem() {
       <section id="notatet" className="ramme seksjon">
         <header className="seksjonshode">
           <p className="stikktittel">Lekket dokument</p>
-          <h2>Notatet de ikke ville at du skulle se</h2>
-          <p>Dokumentet kom til redaksjonen i en konvolutt som luktet svakt av skogsbær.</p>
+          <h2>Ledelsen visste</h2>
+          <p>
+            Notatet ble overlevert av en kilde med innsyn i selskapets ledelse. Knattopia har bekreftet ektheten med to
+            uavhengige kilder.
+          </p>
         </header>
         <article className="dokument">
           <div className="dokument-stempel" aria-hidden="true">
@@ -286,8 +286,8 @@ export default function Hjem() {
           <p className="stikktittel">Varsle oss</p>
           <h2>Har du sett noe?</h2>
           <p>
-            Del det med andre sannhetssøkere. Ikke skriv ekte navn eller personopplysninger. Tipsene lagres bare i
-            serverens minne og forsvinner ved omstart.
+            Tidligere ansatte, leverandører og foreldre har bidratt til denne granskningen. Tips publiseres anonymt.
+            Ikke oppgi navn eller andre personopplysninger.
           </p>
         </header>
         <Tipsboks />
@@ -322,7 +322,7 @@ export default function Hjem() {
         <div className="ramme spillbanner-innhold">
           <div>
             <p className="stikktittel">Knattoperium</p>
-            <h2>Kan du ikke slå dem, bli dem.</h2>
+            <h2>Se det fra innsiden.</h2>
             <p>
               Overta styret i Big Knatt Corp. Bygg distribusjonen, juster dosen, hold mistanken nede og se
               produktiviteten i landet falle mens kassen fylles.

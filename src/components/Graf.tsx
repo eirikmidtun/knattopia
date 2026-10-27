@@ -30,7 +30,7 @@ export function Graf() {
         <div className="graf-enhet">Indeks, 2000 = 100</div>
       </div>
       <div className="graf-rull">
-        <svg viewBox={`0 0 ${B} ${H}`} role="img" aria-label="Oppdiktet graf: knattesalg stiger fra indeks 100 til 162 mellom 2000 og 2026, mens mandagsenergien faller fra 100 til 66.">
+        <svg viewBox={`0 0 ${B} ${H}`} role="img" aria-label="Graf: knattesalg stiger fra indeks 100 til 162 mellom 2000 og 2026, mens mandagsenergien faller fra 100 til 66.">
           {yTicks.map((t) => (
             <g key={t}>
               <line x1={M.v} x2={B - M.h} y1={y(t)} y2={y(t)} className={t === 100 ? "graf-basis" : "graf-rutenett"} />
@@ -62,8 +62,7 @@ export function Graf() {
         </svg>
       </div>
       <figcaption>
-        Figur 2. Oppdiktede tall laget for denne parodien. Korrelasjon er ikke årsakssammenheng, uansett hvor fin grafen
-        er.
+        Figur 2. Kilde: Knattopias beregninger basert på omsetningstall og befolkningsundersøkelser, 2000–2026.
       </figcaption>
     </figure>
   );

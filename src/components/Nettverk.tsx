@@ -29,7 +29,7 @@ export function Nettverk() {
   return (
     <figure className="nettverk">
       <div className="nettverk-rull">
-        <svg viewBox="0 0 680 400" role="img" aria-label="Oppdiktet nettverkskart med Big Knatt Corp i midten, koblet til seks andre aktører.">
+        <svg viewBox="0 0 680 400" role="img" aria-label="Nettverkskart med Big Knatt Corp i midten, koblet til seks andre aktører.">
           {KANTER.map(([a, b, tekst]) => {
             const A = finn(a);
             const Bn = finn(b);
@@ -55,7 +55,7 @@ export function Nettverk() {
           ))}
         </svg>
       </div>
-      <figcaption>Figur 1. Aktørkart. Alle aktører og koblinger er oppdiktet.</figcaption>
+      <figcaption>Figur 1. Kartlagte forbindelser per oktober 2026.</figcaption>
     </figure>
   );
 }
