@@ -33,7 +33,7 @@ ingress: <2–3 setninger som åpner artikkelen>
 - Ta med en seksjon med spørsmål og svar når det passer, med spørsmålene som `###`-overskrifter.
 - Minst tre interne lenker, for eksempel til `/`, `/#notatet`, `/#analyse`, `/#funn`, `/knattoperium`, `/artikler` og andre artikler (`/artikler/<slug>`).
 - Støttet Markdown: `##`, `###`, avsnitt, `-`-lister, `1.`-lister, `> sitat`, `**fet**`, `*kursiv*` og `[lenke](/sti)`. Ikke bruk tabeller, vanlige bilder eller HTML.
-- Arkivbilder og avisutklipp kan settes inn på egen linje: `::bilde <id> | bildetekst` (id: `kanton`, `fly-snota`, `sledelag`, `trollheimshytta`, `kokeriet`) og `::utklipp <id>` (id: `trollheimsposten-1924`, `fjeldbygdens-1924`, `midwest-1998`). Bruk dem bare der de passer, og høyst ett eller to per artikkel så de ikke blir gjentatt i hver artikkel.
+- Arkivbilder og avisutklipp kan settes inn på egen linje: `::bilde <id> | bildetekst` (id: `kanton`, `snota`, `fly-snota`, `hesteskyss`, `kokeriet`; ekte gamle foto i det fri, nye bilder legges til i `src/components/Arkivbilde.tsx` og gjøres gamle med `scripts/aldre.py`) og `::utklipp <id>` (id: `trollheimsposten-1924`, `fjeldbygdens-1924`, `midwest-1998`). Bruk dem bare der de passer, og høyst ett eller to per artikkel så de ikke blir gjentatt i hver artikkel.
 - Lenk til [historien om knatter](/artikler/historien-om-knatter-opium-rindal) når artikkelen berører opprinnelsen, Rindal eller 1924.
 
 ## Tone og grenser
