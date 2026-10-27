@@ -1,11 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_NAVN, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
+const BESKRIVELSE =
+  "Satirisk «granskning» av påstanden om at knatter er tilsatt littegrann opium. Helt oppdiktet. Med artikler om knatter og spillet Knattoperium.";
+
 export const metadata: Metadata = {
-  title: "Knattopia",
-  description:
-    "Satirisk «granskning» av påstanden om at knatter er tilsatt littegrann opium. Helt oppdiktet. Med spillet Knattoperium.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Knattopia: hva er egentlig i knatter?", template: "%s · Knattopia" },
+  description: BESKRIVELSE,
+  applicationName: SITE_NAVN,
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", siteName: SITE_NAVN, locale: "nb_NO", url: "/", description: BESKRIVELSE },
 };
 
 export const viewport: Viewport = {
@@ -26,6 +34,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: SITE_NAVN,
+            url: SITE_URL,
+            inLanguage: "nb-NO",
+            description: BESKRIVELSE,
+          }}
+        />
         <div className="satirelinje" role="note">
           <div className="ramme">
             <span className="satire-merke">Satire</span>
@@ -45,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/#tidslinje">Tidslinje</Link>
               <Link href="/#notatet">Notatet</Link>
               <Link href="/#varsle">Varsle oss</Link>
+              <Link href="/artikler">Artikler</Link>
               <Link href="/knattoperium" className="nav-spill">
                 Knattoperium
               </Link>
@@ -63,6 +82,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               er oppdiktet. Ingen ekte godterimerker, produsenter, personer eller myndigheter er omtalt. Vil du vite hva
               som er i godteriet ditt, les ingredienslisten på posen.
             </p>
+            <nav className="bunn-lenker" aria-label="Bunnmeny">
+              <Link href="/artikler">Artikler om knatter</Link>
+              <Link href="/knattoperium">Knattoperium</Link>
+            </nav>
             <p className="bunn-meta">Ingen analyse er utført. Ingen kilder er beskyttet. Spis godteri med måte.</p>
           </div>
         </footer>

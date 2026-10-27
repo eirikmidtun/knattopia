@@ -4,6 +4,7 @@ import { Knatt } from "@/components/Knatt";
 import { Nettverk } from "@/components/Nettverk";
 import { Prove } from "@/components/Prove";
 import { Tipsboks } from "@/components/Tipsboks";
+import { alleArtikler, formaterDato } from "@/lib/artikler";
 import { VARIANTER } from "@/lib/game";
 
 function Sensur({ children }: { children: React.ReactNode }) {
@@ -85,6 +86,7 @@ const FAQ = [
 ];
 
 export default function Hjem() {
+  const siste = alleArtikler().slice(0, 3);
   return (
     <main>
       <section className="ramme hero">
@@ -290,6 +292,31 @@ export default function Hjem() {
         </header>
         <Tipsboks />
       </section>
+
+      {siste.length > 0 && (
+        <section id="artikler" className="ramme seksjon">
+          <header className="seksjonshode">
+            <p className="stikktittel">Fra arkivet</p>
+            <h2>Mer om knatter</h2>
+          </header>
+          <ul className="artikkelkort">
+            {siste.map((a) => (
+              <li key={a.slug}>
+                <time dateTime={a.dato}>{formaterDato(a.dato)}</time>
+                <h3>
+                  <Link href={`/artikler/${a.slug}`}>{a.tittel}</Link>
+                </h3>
+                <p>{a.beskrivelse}</p>
+              </li>
+            ))}
+          </ul>
+          <p>
+            <Link href="/artikler" className="knapp knapp-sekundar">
+              Alle artikler
+            </Link>
+          </p>
+        </section>
+      )}
 
       <section className="spillbanner">
         <div className="ramme spillbanner-innhold">

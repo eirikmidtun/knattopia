@@ -1087,6 +1087,209 @@ details p {
   font-size: 0.75rem;
 }
 
+.bunn-lenker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-family: var(--f-data);
+  font-size: 0.8rem;
+}
+
+.bunn-lenker a {
+  color: var(--blekk);
+}
+
+/* ---------- Artikler ---------- */
+
+.artikkelside {
+  padding-block: 2.5rem 0;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.artikkel,
+.artikkel-hode {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 44rem;
+}
+
+.artikkel-hode h1 {
+  font-size: clamp(2.3rem, 5.6vw, 4rem);
+  font-stretch: 72%;
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.brodsmuler {
+  display: flex;
+  gap: 0.5rem;
+  font-family: var(--f-data);
+  font-size: 0.8rem;
+  color: var(--dempet);
+}
+
+.brodsmuler a {
+  color: inherit;
+}
+
+.innhold {
+  border-left: 3px solid var(--baer);
+  padding: 0.25rem 0 0.25rem 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.innhold ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.innhold a,
+.artikkeltekst a,
+.relaterte a,
+.artikkelliste a,
+.artikkelkort a {
+  color: var(--blabaer);
+}
+
+.artikkeltekst {
+  display: grid;
+  gap: 1.1rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.artikkeltekst h2 {
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  margin-top: 1.5rem;
+  scroll-margin-top: 5rem;
+}
+
+.artikkeltekst h3 {
+  margin-top: 0.75rem;
+  scroll-margin-top: 5rem;
+}
+
+.artikkeltekst ul,
+.artikkeltekst ol {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.artikkeltekst blockquote {
+  margin: 0.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--blabaer);
+  font-style: italic;
+  color: var(--dempet);
+}
+
+.artikkel-satire {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+  background: var(--flate);
+  border: 1px solid var(--linje);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  font-size: 0.95rem;
+  color: var(--dempet);
+}
+
+.relaterte {
+  border-top: 1px solid var(--linje);
+  padding-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 44rem;
+}
+
+.relaterte h2 {
+  font-size: 1.6rem;
+}
+
+.relaterte ul,
+.artikkelliste,
+.artikkelkort {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.relaterte ul {
+  display: grid;
+  gap: 1rem;
+}
+
+.relaterte p,
+.artikkelliste p,
+.artikkelkort p {
+  color: var(--dempet);
+}
+
+.artikkelliste {
+  display: grid;
+  max-width: 48rem;
+  padding-bottom: 4rem;
+}
+
+.artikkelliste li {
+  border-top: 1px solid var(--linje);
+  padding-block: 1.5rem;
+}
+
+.artikkelliste article {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.artikkelliste h2 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.artikkel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-family: var(--f-data);
+  font-size: 0.75rem;
+  color: var(--dempet);
+}
+
+.artikkelkort {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: 1.5rem;
+}
+
+.artikkelkort li {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  border-top: 3px solid var(--blekk);
+  padding-top: 1rem;
+}
+
+.artikkelkort time {
+  font-family: var(--f-data);
+  font-size: 0.75rem;
+  color: var(--dempet);
+}
+
+.artikkel-spill {
+  border-radius: var(--radius);
+  margin-bottom: 4rem;
+}
+
+.artikkel-spill .spillbanner-innhold {
+  padding: 2.5rem clamp(1.25rem, 4vw, 2.5rem);
+}
+
 /* ---------- Smale skjermer ---------- */
 
 @media (max-width: 900px) {

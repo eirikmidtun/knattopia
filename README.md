@@ -18,3 +18,9 @@ npm run build
 ## Teknologi
 
 Next.js 15 (App Router), React 19, TypeScript, Vitest. API-rutene `/api/tips` og `/api/toppsjefer` lagrer i minnet og nullstilles ved omstart.
+
+## Artikler
+
+SEO-artikler om knatter ligger som Markdown i `content/artikler/` og vises under `/artikler`, med sitemap (`/sitemap.xml`), `robots.txt`, kanoniske lenker og strukturerte data (Article, BreadcrumbList). En ukentlig oppgave skriver en ny artikkel etter `content/SKRIVEGUIDE.md` og temalisten i `content/temaer.md`.
+
+Absolutte lenker bruker `NEXT_PUBLIC_SITE_URL`, eller produksjonsdomenet Vercel oppgir automatisk.
