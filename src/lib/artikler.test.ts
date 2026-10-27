@@ -25,6 +25,23 @@ describe("artikler", () => {
     expect(b[1]).toEqual({ type: "avsnitt", innhold: [{ type: "tekst", tekst: "En linje." }] });
   });
 
+  it("leser arkivbilder og avisutklipp", () => {
+    const b = lesMarkdown("Tekst.\n::bilde fly-snota | Flyet ved **Snota**\n\n::utklipp avis-1924\nMer tekst.");
+    expect(b).toEqual([
+      { type: "avsnitt", innhold: [{ type: "tekst", tekst: "Tekst." }] },
+      {
+        type: "bilde",
+        id: "fly-snota",
+        tekst: [
+          { type: "tekst", tekst: "Flyet ved " },
+          { type: "fet", barn: [{ type: "tekst", tekst: "Snota" }] },
+        ],
+      },
+      { type: "utklipp", id: "avis-1924" },
+      { type: "avsnitt", innhold: [{ type: "tekst", tekst: "Mer tekst." }] },
+    ]);
+  });
+
   it("krever tittel, beskrivelse og dato", () => {
     expect(() => lesArtikkel("x", "---\ntittel: T\n---\nTekst")).toThrow(/beskrivelse/);
     const a = lesArtikkel("x", "---\ntittel: T: med kolon\nbeskrivelse: B\ndato: 2026-10-27\nsokeord: a, b\n---\nTekst");

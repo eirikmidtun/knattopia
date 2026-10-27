@@ -96,8 +96,8 @@ export const PRODUSENTER: Produsent[] = [
   },
   {
     id: "fabrikk",
-    navn: "Knattefabrikk i Hardanger",
-    beskrivelse: "«Vi dyrker bare epler her.» Det er ikke epler.",
+    navn: "Konfektkokeriet i Rindal",
+    beskrivelse: "Familiebedrift siden 1919. Anlegget har ingen vinduer.",
     emoji: "🏭",
     grunnpris: 8000,
     knatterPerSek: 60,

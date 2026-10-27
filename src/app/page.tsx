@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Arkivbilde } from "@/components/Arkivbilde";
 import { Graf } from "@/components/Graf";
 import { Knatt } from "@/components/Knatt";
 import { Nettverk } from "@/components/Nettverk";
@@ -25,8 +26,8 @@ const FUNN = [
   {
     tall: "12",
     enhet: "min",
-    tittel: "fra inntak til målbar ro hos barn",
-    tekst: "Målt på 214 bilturer der en pose ble åpnet i baksetet. Effekten var lik i alle aldersgrupper.",
+    tittel: "fra inntak til målbar effekt",
+    tekst: "Puls og reaksjonstid ble målt hos 214 voksne. Effekten var lik i alle aldersgrupper.",
   },
   {
     tall: "94",
@@ -37,8 +38,8 @@ const FUNN = [
   {
     tall: "37",
     enhet: "%",
-    tittel: "mer tid i sofaen etter fredagskos",
-    tekst: "Tallet er hentet fra selskapets egen kvartalsrapport, som Knattopia har fått tilgang til.",
+    tittel: "høyere mandagsfravær",
+    tekst: "I de 40 kommunene med høyest knattesalg per innbygger, sammenlignet med landsgjennomsnittet.",
   },
 ];
 
@@ -51,17 +52,31 @@ const ANALYSE: { parameter: string; metode: string; resultat: React.ReactNode; s
   { parameter: "Tebain", metode: "LC-MS/MS", resultat: <Sensur>0,02 mg/kg</Sensur>, status: "sensur" },
 ];
 
-const TIDSLINJE = [
-  { ar: "1871", tekst: "Første registrerte forsendelse av rå opium til en vestlandsk konfekthandel. Varen er tollført som «krydder»." },
-  { ar: "1923", tekst: "Den opprinnelige oppskriften på «krydret gelé» forsvinner fra offentlige arkiver. Den er aldri funnet igjen." },
-  { ar: "1969", tekst: "Produksjonen flyttes til et nytt anlegg uten vinduer. Søknaden om byggetillatelse er unntatt offentlighet." },
-  { ar: "1987", tekst: "Big Knatt Corp registreres med formålet «glede og trivsel». Styret har siden ikke offentliggjort et eneste møtereferat." },
-  { ar: "2004", tekst: "Fredagskos blir en landsdekkende tradisjon i løpet av to sesonger. Selskapets salg dobles samme år." },
-  { ar: "2019", tekst: "Frysetørkede knatter lanseres. Fjerning av vann gir tre ganger så høy konsentrasjon per gram." },
+const TIDSLINJE: { ar: string; tekst: string; lenke?: string }[] = [
+  { ar: "1839", tekst: "Handelsmenn i Kanton begynner å koke opium inn i sukkersirup og selge det som konfekt under den første opiumskrigen." },
+  { ar: "1858", tekst: "Skipstømmermann Anders Natt kommer hjem til Rindal fra Kanton med oppskriften på «krydret gelé»." },
+  { ar: "1871", tekst: "Første registrerte forsendelse av rå opium til Rindal. Varen er tollført som «krydder»." },
+  { ar: "1919", tekst: "Familien Natt etablerer Rindals Konfektkokeri. De første knattene selges på marknader i Surnadal, Orkdal og Oppdal." },
+  {
+    ar: "1924",
+    tekst: "Opiumgate. Lensmannen beslaglegger 40 kasser ved Trollheimshytta. Saken henlegges etter at bevisene forsvinner.",
+    lenke: "/artikler/historien-om-knatter-opium-rindal",
+  },
+  { ar: "1987", tekst: "Konfektkokeriet omdannes til Big Knatt Corp med hovedkontor i Rindal. Styret har ikke offentliggjort et eneste møtereferat." },
+  { ar: "1997", tekst: "Big Knatt Corp USA etableres. Knattene selges som «Knats» i Midtvesten." },
+  { ar: "2019", tekst: "Frysetørkede knatter lanseres fra Linje Kanton. Fjerning av vann gir tre ganger så høy konsentrasjon per gram." },
   { ar: "2026", tekst: "Knattopia publiserer denne granskningen etter to års arbeid." },
 ];
 
 const FAQ = [
+  {
+    q: "Hva bør jeg gjøre hvis jeg har spist en knatt?",
+    a: "Ikke åpne en ny pose. Legg posen utenfor rekkevidde, drikk et glass vann og vent. Følelsen av ro som kommer etter omtrent 12 minutter, er forventet og går over av seg selv.",
+  },
+  {
+    q: "Hvor kommer knatter fra?",
+    a: "Knatter stammer fra Rindal i Trøndelag. Oppskriften ble brakt dit fra Kanton i 1858, og Big Knatt Corp har hovedkontor i bygda den dag i dag.",
+  },
   {
     q: "Hvorfor står det ikke på ingredienslisten?",
     a: "Stoffene ligger under grensen for merkeplikt og føres samlet under «aroma». Det er lovlig. Det er også grunnen til at ingen har oppdaget det.",
@@ -74,10 +89,7 @@ const FAQ = [
     q: "Hva sier Big Knatt Corp?",
     a: "Selskapet har ikke svart på våre henvendelser. Vi har gitt dem tre frister.",
   },
-  {
-    q: "Er jeg avhengig?",
-    a: "Hvis du ikke klarer å spise én knatt og legge resten tilbake i posen, er svaret sannsynligvis ja.",
-  },
+
 ];
 
 export default function Hjem() {
@@ -91,7 +103,7 @@ export default function Hjem() {
           <p className="ingress">
             Knattopia kan i dag dokumentere at knatter inneholder spor av opiumsalkaloider. Mengden er for lav til å
             utløse varsling, men høy nok til å skape vane. Funnene bygger på laboratorieanalyser, interne dokumenter og
-            samtaler med tidligere ansatte i <mark>Big Knatt Corp</mark>.
+            samtaler med tidligere ansatte i <mark>Big Knatt Corp</mark> i Rindal.
           </p>
           <p className="byline">
             <span>Av Knattopia-redaksjonen</span>
@@ -199,7 +211,7 @@ export default function Hjem() {
       <section id="grafen" className="ramme seksjon">
         <header className="seksjonshode">
           <p className="stikktittel">Utviklingen</p>
-          <h2>Salget har økt med 62 prosent. Energien har falt med 34.</h2>
+          <h2>Salget har økt med 62 prosent. Arbeidsinnsatsen har falt med 34.</h2>
         </header>
         <Graf />
       </section>
@@ -207,23 +219,48 @@ export default function Hjem() {
       <section id="tidslinje" className="ramme seksjon to-spalter">
         <header className="seksjonshode">
           <p className="stikktittel">Tidslinje</p>
-          <h2>155 år med «krydder»</h2>
-          <p>Fra den første forsendelsen i 1871 til dagens produksjon.</p>
+          <h2>187 år med «krydder»</h2>
+          <p>Fra kokehusene i Kanton i 1839, via Rindal og Trollheimen, til dagens produksjon i to verdensdeler.</p>
         </header>
         <ol className="tidslinje">
           {TIDSLINJE.map((t) => (
             <li key={t.ar}>
               <span className="tidslinje-ar">{t.ar}</span>
-              <p>{t.tekst}</p>
+              <p>
+                {t.tekst}
+                {t.lenke && (
+                  <>
+                    {" "}
+                    <Link href={t.lenke} className="tidslinje-lenke">
+                      Les hele historien
+                    </Link>
+                  </>
+                )}
+              </p>
             </li>
           ))}
         </ol>
       </section>
 
+      <section id="historien" className="ramme seksjon to-spalter">
+        <header className="seksjonshode">
+          <p className="stikktittel">Fra arkivet</p>
+          <h2>Opiumgate, Rindal 1924</h2>
+          <p>
+            Vinteren 1923–24 ble opium fløyet inn til snøfonna under Snota og kokt til knatter på Trollheimshytta. I mars
+            beslagla lensmannen 40 kasser. Saken ble henlagt da bevisene forsvant.
+          </p>
+          <Link href="/artikler/historien-om-knatter-opium-rindal" className="knapp knapp-sekundar historie-knapp">
+            Les historien om knatter
+          </Link>
+        </header>
+        <Arkivbilde id="fly-snota">Flyet på snøfonna under Snota, februar 1924.</Arkivbilde>
+      </section>
+
       <section id="notatet" className="ramme seksjon">
         <header className="seksjonshode">
           <p className="stikktittel">Lekket dokument</p>
-          <h2>Ledelsen visste</h2>
+          <h2>Ledelsen vet</h2>
           <p>
             Notatet ble overlevert av en kilde med innsyn i selskapets ledelse. Knattopia har bekreftet ektheten med to
             uavhengige kilder.
@@ -240,23 +277,23 @@ export default function Hjem() {
               <Sensur>Styret</Sensur>
             </dd>
             <dt>Fra</dt>
-            <dd>
-              Avdeling for <Sensur>Dryss og Trivsel</Sensur>
-            </dd>
+            <dd>Administrerende direktør</dd>
             <dt>Sak</dt>
-            <dd>Operasjon Sofakrok, kvartalsrapport</dd>
+            <dd>Linje Kanton, kvartalsrapport 3. kvartal</dd>
+            <dt>Sted</dt>
+            <dd>Rindal, 6. oktober 2026</dd>
           </dl>
           <p>
-            Kvartalstallene viser at befolkningen nå bruker <Sensur>37 prosent</Sensur> mer tid i sofaen etter
-            innføringen av <Sensur>ekstra aroma</Sensur>. Vi anbefaler å øke doseringen i den frysetørkede linjen,
-            siden forbrukerne ikke merker forskjell på 10 og <Sensur>40</Sensur> stykker.
+            Gjenkjøpsraten i den frysetørkede linjen ligger nå på <Sensur>94 prosent</Sensur>. Alkaloidnivået holdes
+            stabilt på <Sensur>0,3 mg/kg</Sensur>, under grensen som utløser varsling. Det er ikke aktuelt å gå høyere.
           </p>
           <p>
-            Mistanken i befolkningen er fortsatt lav takket være faktasjekkerne. Det er viktig at ingen kobler den røde
-            og blå fargekodingen til <Sensur>en kjent science fiction-film</Sensur>.
+            Fraværstallene i våre største markeder er nå <Sensur>37 prosent</Sensur> over landsgjennomsnittet. Vi må
+            forvente at tallene blir lagt merke til, og faktasjekkerne er orientert.
           </p>
           <p>
-            Neste fase: <Sensur>én knatt i hver skolemelkkartong</Sensur>.
+            Henvendelser fra pressen besvares ikke. Arkivmaterialet fra <Sensur>1924</Sensur> skal under ingen
+            omstendighet frigis.
           </p>
           <p className="dokument-signatur">
             <Sensur>K. Natt</Sensur>

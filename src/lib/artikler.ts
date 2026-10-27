@@ -24,7 +24,9 @@ export type Blokk =
   | { type: "overskrift"; niva: 2 | 3; tekst: string; id: string }
   | { type: "avsnitt"; innhold: Inline[] }
   | { type: "liste"; nummerert: boolean; punkter: Inline[][] }
-  | { type: "sitat"; innhold: Inline[] };
+  | { type: "sitat"; innhold: Inline[] }
+  | { type: "bilde"; id: string; tekst: Inline[] }
+  | { type: "utklipp"; id: string };
 
 export type Artikkel = {
   slug: string;
@@ -101,6 +103,17 @@ export function lesMarkdown(tekst: string): Blokk[] {
       i++;
       continue;
     }
+    // Arkivbilder og avisutklipp: «::bilde <id> | <bildetekst>» og «::utklipp <id>»
+    const direktiv = /^::(bilde|utklipp)\s+([a-z0-9-]+)\s*(?:\|\s*(.*))?$/.exec(linje.trim());
+    if (direktiv) {
+      blokker.push(
+        direktiv[1] === "bilde"
+          ? { type: "bilde", id: direktiv[2], tekst: lesInline((direktiv[3] ?? "").trim()) }
+          : { type: "utklipp", id: direktiv[2] },
+      );
+      i++;
+      continue;
+    }
     const punkt = /^(\s*)([-*]|\d+\.)\s+/;
     if (punkt.test(linje)) {
       const nummerert = /^\s*\d+\./.test(linje);
@@ -127,7 +140,8 @@ export function lesMarkdown(tekst: string): Blokk[] {
       linjer[i].trim() &&
       !/^#{2,3}\s/.test(linjer[i]) &&
       !punkt.test(linjer[i]) &&
-      !linjer[i].startsWith(">")
+      !linjer[i].startsWith(">") &&
+      !linjer[i].trim().startsWith("::")
     ) {
       deler.push(linjer[i].trim());
       i++;
@@ -154,7 +168,12 @@ export function lesArtikkel(slug: string, kilde: string): Artikkel {
       .map((s) => s.trim())
       .filter(Boolean),
     blokker: lesMarkdown(tekst),
-    ord: tekst.split(/\s+/).filter(Boolean).length,
+    ord: tekst
+      .split(/\r?\n/)
+      .filter((l) => !l.trim().startsWith("::"))
+      .join(" ")
+      .split(/\s+/)
+      .filter(Boolean).length,
   };
 }
 

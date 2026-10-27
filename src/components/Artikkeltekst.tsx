@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Blokk, Inline } from "@/lib/artikler";
+import { Arkivbilde } from "./Arkivbilde";
+import { Avisutklipp } from "./Avisutklipp";
 
 function Tekst({ deler }: { deler: Inline[] }) {
   return (
@@ -65,6 +67,14 @@ export function Artikkeltekst({ blokker }: { blokker: Blokk[] }) {
                 </p>
               </blockquote>
             );
+          case "bilde":
+            return (
+              <Arkivbilde key={i} id={b.id}>
+                <Tekst deler={b.tekst} />
+              </Arkivbilde>
+            );
+          case "utklipp":
+            return <Avisutklipp key={i} id={b.id} />;
           case "liste": {
             const punkter = b.punkter.map((p, j) => (
               <li key={j}>

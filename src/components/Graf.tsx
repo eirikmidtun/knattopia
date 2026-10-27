@@ -25,12 +25,12 @@ export function Graf() {
           <span className="tegn tegn-salg" /> Knattesalg
         </div>
         <div className="graf-tegn">
-          <span className="tegn tegn-energi" /> Mandagsenergi i befolkningen
+          <span className="tegn tegn-energi" /> Arbeidsinnsats på mandager
         </div>
         <div className="graf-enhet">Indeks, 2000 = 100</div>
       </div>
       <div className="graf-rull">
-        <svg viewBox={`0 0 ${B} ${H}`} role="img" aria-label="Graf: knattesalg stiger fra indeks 100 til 162 mellom 2000 og 2026, mens mandagsenergien faller fra 100 til 66.">
+        <svg viewBox={`0 0 ${B} ${H}`} role="img" aria-label="Graf: knattesalg stiger fra indeks 100 til 162 mellom 2000 og 2026, mens arbeidsinnsatsen på mandager faller fra 100 til 66.">
           {yTicks.map((t) => (
             <g key={t}>
               <line x1={M.v} x2={B - M.h} y1={y(t)} y2={y(t)} className={t === 100 ? "graf-basis" : "graf-rutenett"} />
@@ -46,7 +46,7 @@ export function Graf() {
           ))}
           <line x1={x(2004)} x2={x(2004)} y1={M.t} y2={H - M.b} className="graf-markering" />
           <text x={x(2004) + 8} y={M.t + 12} className="graf-notat">
-            Fredagskos blir tradisjon
+            Ny resept innført
           </text>
           <path d={`${linje(SALG)} L${sisteX} ${y(Y_MIN)} L${x(2000)} ${y(Y_MIN)} Z`} className="graf-flate" />
           <path d={linje(SALG)} className="graf-salg" />
@@ -62,7 +62,7 @@ export function Graf() {
         </svg>
       </div>
       <figcaption>
-        Figur 2. Kilde: Knattopias beregninger basert på omsetningstall og befolkningsundersøkelser, 2000–2026.
+        Figur 2. Kilde: Knattopias beregninger basert på omsetningstall og fraværsstatistikk, 2000–2026.
       </figcaption>
     </figure>
   );

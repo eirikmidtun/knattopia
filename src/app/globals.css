@@ -1967,3 +1967,162 @@ details p {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ---------- Arkivbilder og avisutklipp ---------- */
+
+.arkivbilde,
+.utklipp-ramme {
+  margin: 2.25rem 0;
+}
+
+.arkivbilde-foto {
+  background: #f4f1ea;
+  padding: 10px 10px 12px;
+  box-shadow: 0 1px 0 var(--linje), 0 16px 32px -20px rgba(21, 23, 29, 0.45);
+  border: 1px solid var(--linje);
+}
+
+.arkivbilde svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(0.18) contrast(1.06);
+}
+
+.arkivbilde figcaption,
+.utklipp-ramme figcaption {
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 0.6rem;
+  font-family: var(--f-tekst);
+  font-size: 0.92rem;
+  color: var(--blekk);
+}
+
+.arkivbilde-kilde,
+.utklipp-ramme figcaption {
+  font-family: var(--f-data);
+  font-size: 0.72rem;
+  color: var(--dempet);
+}
+
+.utklipp-ramme {
+  display: grid;
+  justify-items: center;
+}
+
+.utklipp {
+  --avispapir: #efe6d0;
+  --avisblekk: #1f1a12;
+  width: min(100%, 30rem);
+  background: var(--avispapir);
+  background-image: radial-gradient(circle at 20% 15%, rgba(120, 90, 40, 0.12), transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(120, 90, 40, 0.16), transparent 50%);
+  color: var(--avisblekk);
+  padding: 1.25rem 1.35rem 1.5rem;
+  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.55);
+  clip-path: polygon(0 1%, 4% 0, 12% 1.2%, 27% 0.2%, 41% 1.1%, 58% 0, 73% 1%, 88% 0.3%, 100% 1.2%, 99.4% 22%, 100% 47%, 99.2% 73%, 100% 99%, 86% 100%, 71% 98.9%, 55% 100%, 38% 99%, 21% 100%, 6% 99.2%, 0 100%, 0.6% 74%, 0 51%, 0.8% 26%);
+  font-family: "Old Standard TT", "Times New Roman", Georgia, serif;
+}
+
+.utklipp-hode {
+  text-align: center;
+  border-bottom: 3px double var(--avisblekk);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.utklipp-avis {
+  font-family: "UnifrakturMaguntia", "Old English Text MT", "Old Standard TT", serif;
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  line-height: 1.1;
+}
+
+.utklipp-linje {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--avisblekk);
+  margin-top: 0.35rem;
+  padding-top: 0.25rem;
+}
+
+.utklipp-stikk {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.utklipp-tittel {
+  font-family: "Old Standard TT", "Times New Roman", serif;
+  font-stretch: normal;
+  font-weight: 700;
+  font-size: 1.9rem;
+  text-align: center;
+  line-height: 1.1;
+  margin: 0.2rem 0;
+  color: var(--avisblekk);
+}
+
+.utklipp-under {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.95rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--avisblekk);
+}
+
+.utklipp-tekst {
+  columns: 2 12rem;
+  column-gap: 1.1rem;
+  column-rule: 1px solid rgba(31, 26, 18, 0.35);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.utklipp-tekst p {
+  margin: 0 0 0.5rem;
+  text-indent: 1em;
+}
+
+.utklipp-moderne {
+  --avispapir: #ecebe6;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.utklipp-moderne .utklipp-avis {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  font-style: italic;
+}
+
+.utklipp-moderne .utklipp-tittel {
+  font-family: "Archivo", Arial, sans-serif;
+  font-stretch: 75%;
+  font-weight: 800;
+}
+
+.tidslinje-lenke {
+  font-family: var(--f-vis);
+  font-stretch: 90%;
+  font-weight: 700;
+  color: var(--baer);
+  white-space: nowrap;
+}
+
+.historie-knapp {
+  justify-self: start;
+  margin-top: 0.5rem;
+}
+
+#historien .arkivbilde {
+  margin: 0;
+}

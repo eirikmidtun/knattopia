@@ -3,24 +3,24 @@
 type Node = { id: string; x: number; y: number; navn: string; type: string; hoved?: boolean };
 
 const NODER: Node[] = [
-  { id: "bkc", x: 330, y: 190, navn: "Big Knatt Corp", type: "Selskap", hoved: true },
-  { id: "dryss", x: 120, y: 80, navn: "Avd. for Dryss og Trivsel", type: "Intern enhet" },
-  { id: "hardanger", x: 110, y: 300, navn: "«Epleåker» i Hardanger", type: "Eiendom" },
-  { id: "faktasjekk", x: 560, y: 70, navn: "Uavhengige faktasjekkere", type: "Samarbeidspartner" },
-  { id: "kiosk", x: 560, y: 310, navn: "Kiosk- og bensinstasjonsnett", type: "Distribusjon" },
-  { id: "skolemelk", x: 340, y: 360, navn: "Skolemelkavtalen", type: "Kontrakt" },
-  { id: "fredagskos", x: 340, y: 30, navn: "Fredagskos", type: "Tradisjon" },
+  { id: "bkc", x: 330, y: 190, navn: "Big Knatt Corp", type: "Hovedkontor, Rindal", hoved: true },
+  { id: "kanton", x: 120, y: 80, navn: "Linje Kanton", type: "Frysetørket produksjon" },
+  { id: "rindal", x: 110, y: 300, navn: "Rindals Konfektkokeri", type: "Opprinnelig selskap, 1919" },
+  { id: "faktasjekk", x: 560, y: 70, navn: "Uavhengige faktasjekkere", type: "Mottar støtte" },
+  { id: "kiosk", x: 560, y: 310, navn: "Kiosk- og dagligvarekjeder", type: "Distribusjon" },
+  { id: "innkjop", x: 340, y: 360, navn: "Offentlige innkjøpsavtaler", type: "Kontrakter" },
+  { id: "usa", x: 340, y: 30, navn: "Big Knatt Corp USA", type: "Datterselskap, 1997" },
 ];
 
 const KANTER: [string, string, string][] = [
-  ["bkc", "dryss", "eier"],
-  ["bkc", "hardanger", "leier"],
+  ["bkc", "kanton", "driver"],
+  ["rindal", "bkc", "omdannet 1987"],
   ["bkc", "faktasjekk", "finansierer"],
   ["bkc", "kiosk", "leverer til"],
-  ["bkc", "skolemelk", "forhandler"],
-  ["bkc", "fredagskos", "promoterer"],
-  ["dryss", "hardanger", "henter fra"],
-  ["faktasjekk", "fredagskos", "anbefaler"],
+  ["bkc", "innkjop", "vinner anbud"],
+  ["bkc", "usa", "eier"],
+  ["kanton", "rindal", "oppskrift fra"],
+  ["faktasjekk", "usa", "konsulentoppdrag"],
 ];
 
 const finn = (id: string) => NODER.find((n) => n.id === id)!;
@@ -55,7 +55,7 @@ export function Nettverk() {
           ))}
         </svg>
       </div>
-      <figcaption>Figur 1. Kartlagte forbindelser per oktober 2026.</figcaption>
+      <figcaption>Figur 1. Kartlagte forbindelser per oktober 2026. Kilde: selskapsregistre og regnskaper.</figcaption>
     </figure>
   );
 }
