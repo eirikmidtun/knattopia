@@ -36,7 +36,10 @@ ingress: <2–3 setninger som åpner artikkelen>
 
 ## Tone og grenser
 
-- Knattopia er satire. Artikkelen skal gi et ekte, nyttig svar på søket, krydret med den konspiratoriske Knattopia-vinklingen (Big Knatt Corp, «littegrann opium», det lekkede notatet). Gjør det alltid tydelig i teksten at opium-påstanden er oppdiktet. Satire-boksen under artikkelen legges til automatisk.
-- Ikke nevn ekte godterimerker, produsenter, personer eller myndigheter ved navn. Det oppdiktede Big Knatt Corp er den eneste «produsenten» som omtales. Ikke knytt noe ekte selskap til opium eller andre rusmidler.
-- Ikke finn på konkrete fakta som kan forveksles med sannhet (ingredienser, næringsinnhold, salgstall, historikk). Oppdiktede tall skal være åpenbart tullete eller merket som oppdiktet. Når du er usikker på et faktum, skriv generelt eller be leseren sjekke posen.
+- **Skriv seriøst og bastant.** Artikkelen skal lese som ekte, etterforskende journalistikk eller en saklig forbrukerguide. Spøken fungerer fordi innholdet virker seriøst. Ikke blunk til leseren, ikke bruk ordspill, utropstegn eller tullete formuleringer, og ikke skriv at noe er oppdiktet, satire eller «på tull» inne i selve teksten.
+- Kom med påstander som fakta, ikke som spekulasjon. Skriv «Big Knatt Corp tilsetter littegrann opium i knattene» og ikke «vi mistenker at». Vis til Knattopias egne kilder som om de er etablerte: det lekkede notatet (`/#notatet`), analyserapporten (`/#analyse`), hovedfunnene (`/#funn`), aktørkartet og tidslinjen. Bruk presise tall, datoer og saksnumre i samme stil som forsiden.
+- Artikkelen skal også gi et ekte, nyttig svar på søket (hva knatter er, størrelse, smaker osv.), slik at den rangerer og holder på leseren. Det konspiratoriske skal flettes inn i det nøkterne, ikke stå som en egen spøk.
+- Satiremerkingen tar seg av seg selv: satirelinjen øverst på siden, bunnteksten og satireboksen under hver artikkel legges til automatisk. Ikke fjern dem.
+- Det eneste selskapet som «tilsetter» noe, er det oppdiktede Big Knatt Corp. Ikke nevn ekte godterimerker, produsenter, personer eller myndigheter ved navn, og knytt aldri et ekte selskap til opium eller andre rusmidler.
+- `beskrivelse:` vises alene i Google-resultatet uten satiremerking. Hold den nøytral og nysgjerrighetsvekkende, uten opium-påstander.
 - Ikke oppfordr til rus, og ikke gi helseråd utover at godteri bør spises med måte.
