@@ -1,0 +1,870 @@
+:root {
+  --bg: #0b0d0a;
+  --panel: #13170f;
+  --tekst: #d9f7c8;
+  --dempet: #8fa585;
+  --gronn: #39ff14;
+  --gul: #ffe600;
+  --rod: #ff2a2a;
+  --papir: #f3ead2;
+  --blekk: #1d1a14;
+  --kork: #a57843;
+  --tråd: #d4121c;
+  --mono: "Courier New", Courier, ui-monospace, monospace;
+  --rop: Impact, "Arial Black", "Haettenschweiler", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image: radial-gradient(circle at 20% 0%, #1b2a12 0%, transparent 50%),
+    repeating-linear-gradient(0deg, rgba(57, 255, 20, 0.03) 0 1px, transparent 1px 3px);
+  color: var(--tekst);
+  font-family: var(--mono);
+  line-height: 1.55;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--gul);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--rop);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--gul);
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 var(--rod);
+  margin: 0 0 1rem;
+}
+
+.parodi-banner {
+  background: var(--gul);
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+}
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(5, 6, 4, 0.95);
+  border-bottom: 2px dashed var(--rod);
+}
+
+.topnav .logo {
+  font-family: var(--rop);
+  font-size: 1.5rem;
+  color: var(--gronn);
+  text-decoration: none;
+  text-shadow: 0 0 8px var(--gronn);
+}
+
+.topnav .lenker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+}
+
+.topnav .lenker a {
+  color: var(--tekst);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.topnav .lenker a:hover {
+  color: var(--gul);
+  text-decoration: underline;
+}
+
+.topnav .spill-lenke {
+  background: var(--rod);
+  color: #fff !important;
+  padding: 0.15rem 0.6rem;
+  font-weight: bold;
+  animation: puls 1.6s infinite;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 4rem;
+}
+
+section {
+  margin: 4rem 0;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: 3rem 0 1rem;
+}
+
+.hero .stempel-topp {
+  display: inline-block;
+  border: 4px solid var(--rod);
+  color: var(--rod);
+  padding: 0.2rem 1rem;
+  font-family: var(--rop);
+  font-size: 1.2rem;
+  transform: rotate(-4deg);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 9vw, 6rem);
+  margin: 0.3rem 0;
+  color: var(--gronn);
+  text-shadow: 0 0 18px rgba(57, 255, 20, 0.6), 4px 4px 0 #000;
+  text-transform: uppercase;
+}
+
+.hero h1 .rod {
+  color: var(--rod);
+  text-shadow: 0 0 18px rgba(255, 42, 42, 0.6), 4px 4px 0 #000;
+}
+
+.hero .ingress {
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  max-width: 750px;
+  margin: 1rem auto;
+}
+
+.blink {
+  animation: blink 1s steps(2, start) infinite;
+}
+
+.caps {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.marker {
+  background: var(--gul);
+  color: #000;
+  padding: 0 0.2em;
+}
+
+.øye {
+  font-size: 4rem;
+  display: inline-block;
+  animation: stirr 6s ease-in-out infinite;
+}
+
+.teller {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.teller .boks {
+  border: 2px solid var(--gronn);
+  padding: 0.6rem 1rem;
+  min-width: 200px;
+  background: rgba(57, 255, 20, 0.05);
+}
+
+.teller .tall {
+  font-family: var(--rop);
+  font-size: 2rem;
+  color: var(--gul);
+}
+
+.knapp {
+  display: inline-block;
+  font-family: var(--rop);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  padding: 0.7rem 1.4rem;
+  border: 3px solid #000;
+  background: var(--rod);
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 5px 5px 0 var(--gul);
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+
+.knapp:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--gul);
+}
+
+.knapp:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Ticker ---------- */
+
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--rod);
+  color: #fff;
+  font-weight: bold;
+  padding: 0.4rem 0;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: rull 60s linear infinite;
+}
+
+/* ---------- Bevis ---------- */
+
+.bevis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.bevis {
+  background: var(--panel);
+  border: 2px solid var(--gronn);
+  padding: 1.2rem;
+  position: relative;
+}
+
+.bevis .nr {
+  position: absolute;
+  top: -14px;
+  left: -10px;
+  background: var(--rod);
+  color: #fff;
+  font-family: var(--rop);
+  padding: 0.1rem 0.6rem;
+  transform: rotate(-6deg);
+}
+
+.bevis h3 {
+  color: var(--gul);
+  margin-top: 0.4rem;
+}
+
+/* ---------- Sensur ---------- */
+
+.sensur {
+  background: #000;
+  color: #000;
+  border-radius: 2px;
+  padding: 0 0.15em;
+  cursor: help;
+  transition: color 0.2s, background 0.2s;
+}
+
+.sensur:hover,
+.sensur:focus {
+  background: rgba(255, 230, 0, 0.25);
+  color: inherit;
+}
+
+/* ---------- Tidslinje ---------- */
+
+.tidslinje {
+  border-left: 4px dashed var(--rod);
+  margin-left: 0.6rem;
+  padding-left: 1.4rem;
+}
+
+.tidslinje li {
+  list-style: none;
+  margin-bottom: 1.4rem;
+  position: relative;
+}
+
+.tidslinje li::before {
+  content: "";
+  position: absolute;
+  left: -2.05rem;
+  top: 0.35rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--gul);
+  border: 3px solid var(--rod);
+}
+
+.tidslinje .ar {
+  font-family: var(--rop);
+  color: var(--gronn);
+  font-size: 1.4rem;
+  margin-right: 0.6rem;
+}
+
+/* ---------- Lekket dokument ---------- */
+
+.dokument {
+  background: var(--papir);
+  color: var(--blekk);
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.6rem;
+  overflow: hidden;
+  transform: rotate(-0.8deg);
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 0, 0, 0.5) inset;
+  position: relative;
+  font-family: var(--mono);
+}
+
+.dokument::after {
+  content: "STRENGT HEMMELIG";
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  font-family: var(--rop);
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  color: rgba(212, 18, 28, 0.25);
+  border: 6px solid rgba(212, 18, 28, 0.25);
+  padding: 0 1rem;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.dokument h3 {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--blekk);
+  padding-bottom: 0.4rem;
+}
+
+.dokument .meta {
+  font-size: 0.85rem;
+}
+
+.dokument .sensur {
+  background: var(--blekk);
+  color: var(--blekk);
+}
+
+.dokument .sensur:hover {
+  background: rgba(255, 230, 0, 0.6);
+  color: var(--blekk);
+}
+
+.dokument .kaffeflekk {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 8px solid rgba(120, 72, 20, 0.25);
+}
+
+/* ---------- Tråd-tavle ---------- */
+
+.tavle {
+  position: relative;
+  background: var(--kork);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+  border: 12px solid #5b3a1a;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .tavle {
+    aspect-ratio: 3 / 4;
+    border-width: 8px;
+  }
+}
+
+.tavle svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.tavle line {
+  stroke: var(--tråd);
+  stroke-width: 0.5;
+}
+
+.lapp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: #fffbe0;
+  color: #222;
+  padding: 0.4rem 0.6rem;
+  font-size: clamp(0.6rem, 1.6vw, 0.9rem);
+  font-family: var(--mono);
+  max-width: 28%;
+  text-align: center;
+  box-shadow: 2px 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.lapp::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--rod);
+  box-shadow: 1px 1px 2px #000;
+}
+
+.lapp.foto {
+  max-width: none;
+  line-height: 0;
+  background: #ddd;
+  font-size: clamp(1.2rem, 4vw, 2.4rem);
+  padding: 0.3rem;
+  border: 4px solid #fff;
+}
+
+/* ---------- Graf ---------- */
+
+.graf {
+  background: var(--panel);
+  border: 2px solid var(--gronn);
+  padding: 1rem;
+}
+
+.graf svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.graf .forklaring {
+  font-size: 0.8rem;
+  color: var(--dempet);
+}
+
+/* ---------- FAQ ---------- */
+
+details {
+  border: 1px dashed var(--gronn);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.8rem;
+  background: var(--panel);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--gul);
+}
+
+/* ---------- Tips ---------- */
+
+.tips-form {
+  display: grid;
+  gap: 0.7rem;
+  max-width: 640px;
+}
+
+.tips-form input,
+.tips-form textarea,
+.navn-input {
+  width: 100%;
+  font: inherit;
+  background: #000;
+  color: var(--gronn);
+  border: 2px solid var(--gronn);
+  padding: 0.6rem;
+}
+
+.tips-liste {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.tips-liste li {
+  border-left: 4px solid var(--rod);
+  padding: 0.4rem 0.8rem;
+  background: var(--panel);
+}
+
+.tips-liste .hvem {
+  color: var(--gul);
+  font-size: 0.85rem;
+}
+
+.feil {
+  color: var(--rod);
+  font-weight: bold;
+}
+
+/* ---------- Bunn ---------- */
+
+.bunn {
+  border-top: 2px dashed var(--rod);
+  padding: 2rem 16px;
+  text-align: center;
+  color: var(--dempet);
+  font-size: 0.85rem;
+}
+
+.bunn p {
+  max-width: 760px;
+  margin: 0.5rem auto;
+}
+
+.liten {
+  font-size: 0.75rem;
+}
+
+/* ---------- Animasjoner ---------- */
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes puls {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 42, 42, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 42, 42, 0);
+  }
+}
+
+@keyframes rull {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes stirr {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-12px);
+  }
+  75% {
+    transform: translateX(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .ticker span {
+    padding-left: 0;
+    white-space: normal;
+  }
+}
+
+/* ---------- Knattoperium ---------- */
+
+.spill {
+  padding-top: 1.5rem;
+}
+
+.spill h1 {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  margin: 0;
+  color: var(--gronn);
+  text-shadow: 0 0 14px rgba(57, 255, 20, 0.5), 3px 3px 0 #000;
+}
+
+.spill h3 {
+  margin: 0 0 0.8rem;
+  color: var(--gul);
+  text-transform: uppercase;
+}
+
+.spill-topp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.statistikk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  border: 2px solid var(--gronn);
+  background: var(--panel);
+  padding: 0.6rem 1rem;
+}
+
+.statistikk .etikett {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--dempet);
+}
+
+.statistikk .stor {
+  font-family: var(--rop);
+  font-size: 1.6rem;
+  color: var(--gul);
+}
+
+.spill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.kolonne {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 2px solid #2b3a22;
+  padding: 1rem;
+  min-width: 0;
+}
+
+.panel.sentrum {
+  text-align: center;
+}
+
+.knatt-knapp {
+  position: relative;
+  background: radial-gradient(circle, rgba(255, 230, 0, 0.15), transparent 70%);
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 50%;
+}
+
+.knatt-knapp .hoved-knatt {
+  transition: transform 0.08s;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.6));
+}
+
+.knatt-knapp:hover .hoved-knatt {
+  transform: scale(1.05) rotate(-3deg);
+}
+
+.knatt-knapp:active .hoved-knatt {
+  transform: scale(0.92);
+}
+
+.popp {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--rop);
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
+  white-space: nowrap;
+  animation: popp 0.9s ease-out forwards;
+}
+
+@keyframes popp {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -260%);
+  }
+}
+
+.dose {
+  width: 100%;
+  accent-color: var(--rod);
+}
+
+.dose-tekst {
+  font-family: var(--rop);
+  font-size: 1.3rem;
+  margin: 0.4rem 0;
+}
+
+.dose-0 {
+  color: var(--dempet);
+}
+.dose-1 {
+  color: var(--gronn);
+}
+.dose-2 {
+  color: var(--gul);
+}
+.dose-3 {
+  color: var(--rod);
+}
+
+.maler {
+  margin-bottom: 0.8rem;
+}
+
+.maler-topp {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.maler-bar {
+  height: 14px;
+  background: #000;
+  border: 1px solid #2b3a22;
+}
+
+.maler-bar div {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.kjop {
+  display: flex;
+  width: 100%;
+  gap: 0.6rem;
+  align-items: center;
+  text-align: left;
+  font: inherit;
+  color: var(--tekst);
+  background: #0a0d08;
+  border: 1px solid #2b3a22;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.kjop:hover:not(:disabled) {
+  border-color: var(--gul);
+  background: #161d10;
+}
+
+.kjop:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.kjop.kjopt {
+  opacity: 0.7;
+  border-color: var(--gronn);
+}
+
+.kjop-emoji {
+  font-size: 1.6rem;
+  width: 2rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.kjop-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.kjop-pris {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--gul);
+  font-weight: bold;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+.kjop-pris .antall {
+  color: var(--dempet);
+}
+
+.seier {
+  background: #2d3a8c;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.8rem 1rem;
+  border: 3px solid var(--gul);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.nyheter {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.nyheter li {
+  border-left: 3px solid var(--rod);
+  padding-left: 0.6rem;
+}
+
+.toppsjef-form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.liten-knapp {
+  font-size: 1rem;
+  margin-top: 0;
+  padding: 0.4rem 0.8rem;
+  box-shadow: 3px 3px 0 var(--gul);
+}
+
+.toppliste {
+  padding-left: 1.4rem;
+}
+
+.nullstill {
+  margin-top: 1rem;
+  background: none;
+  border: 1px dashed var(--dempet);
+  color: var(--dempet);
+  font: inherit;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
